@@ -18,6 +18,43 @@
         margin: 0;
         padding: 0;
       }
+      /* Falling leaves styles */
+      .falling-leaves-container {
+        pointer-events: none;
+        position: fixed;
+        top:0;
+        left:0;
+        width:100vw;
+        height:100vh;
+        z-index:9998;
+        overflow: visible !important;
+      }
+      .leaf {
+        position: absolute;
+        width: 36px;
+        height: 38px;
+        opacity: .88;
+        pointer-events: none;
+        will-change: transform, opacity;
+        user-select: none;
+      }
+      /* KERING */
+      .leaf.dry svg .leafShape {
+        fill: #C19A6B;
+        stroke: #a07246;
+      }
+      /* HIJAU */
+      .leaf.green svg .leafShape {
+        fill: #7BC162;
+        stroke: #3a8035;
+      }
+      .leaf svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      /* End Falling leaves styles */
+
       .bg-mtk-2 {
         position: absolute;
         top: 0;
@@ -273,6 +310,7 @@
     </style>
   </head>
   <body>
+    <div class="falling-leaves-container" id="leavesContainer"></div>
     <button id="muteToggleBtn" class="mute-toggle-btn" aria-label="Mute / Unmute Audio" title="Mute / Unmute">
       <svg id="icon-unmuted" style="display:block;" viewBox="0 0 24 24" fill="none" stroke="#FBB904" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <polygon points="9 9 13 9 17 5 17 19 13 15 9 15 9 9"></polygon>
@@ -326,6 +364,105 @@
       <script>
         document.documentElement.style.overflow = 'hidden';
         document.body.style.overflow = 'hidden';
+
+        // FALLING LEAVES EFFECT
+        (function fallingLeaves(){
+          // SVGs for dry and green leaf
+          const leafSVGs = [
+            `<svg viewBox="0 0 36 38">
+              <path class="leafShape" d="M18,2 C16,11 3,13 2,23 C1,31 12,36 19,36 C27,36 34,30 33,20 C32,10 21,9 18,2 Z" fill="#C19A6B" stroke="#a07246" stroke-width="2"/>
+              <path d="M18 6 Q15 20 19 36" stroke="#a07246" stroke-width="1.5" fill="none"/>
+            </svg>`,
+            `<svg viewBox="0 0 36 38">
+              <path class="leafShape" d="M18,4 C14,12 5,15 5,25 C5,32 18,36 23,31 C29,25 34,17 26,11 C23,9 20,4 18,4 Z" fill="#7BC162" stroke="#3a8035" stroke-width="2"/>
+              <path d="M18 8 Q17 23 23 31" stroke="#3a8035" stroke-width="1.5" fill="none"/>
+            </svg>`
+          ];
+          const types = ['dry','green'];
+          const leavesContainer = document.getElementById('leavesContainer');
+          const screenW = () => window.innerWidth || document.documentElement.clientWidth;
+          const screenH = () => window.innerHeight || document.documentElement.clientHeight;
+
+          function randomBetween(a, b) {
+            return a + Math.random() * (b - a);
+          }
+
+          function createLeaf() {
+            const idx = Math.random() < 0.48 ? 0 : 1; // ~50:50 dry:green
+            const type = types[idx];
+            const leaf = document.createElement('div');
+            leaf.className = `leaf ${type}`; // .leaf.dry or .leaf.green
+            leaf.innerHTML = leafSVGs[idx];
+
+            // initial position and styles
+            const size = randomBetween(22,38);
+            leaf.style.width = `${size}px`;
+            leaf.style.height = `${size+2}px`;
+            const left = randomBetween(-20, screenW()+20); // allow from outside screen
+            leaf.style.left = left + "px";
+            leaf.style.top = randomBetween(-50,-20) + "px";
+            leaf.style.opacity = randomBetween(0.7,1);
+
+            // random animation params
+            const duration = randomBetween(8,18); // detik
+            const swing = randomBetween(40, 140); // px
+            const rot0 = randomBetween(-20,20);
+            const rot = randomBetween(-95,95);
+
+            // Animate
+            let start = null;
+            let y = parseFloat(leaf.style.top);
+            const initLeft = left;
+            let side = Math.random() > 0.5 ? 1 : -1;
+            let gust = randomBetween(0.4,1.8);
+            let swayCoef = randomBetween(1, 2.3) * (side);
+            let rotDelta = rot - rot0;
+            function animateLeaf(ts){
+              if(!start) start=ts;
+              let progress = (ts-start)/(duration*1000);
+              if(progress > 1){
+                leaf.remove();
+                return;
+              }
+              // vertical progress
+              let y_now = y + progress * (screenH() + 50); // turun
+              leaf.style.top = `${y_now}px`;
+              // swing left-right
+              let x_off = Math.sin( (progress + swayCoef) * Math.PI * 2) * swing + gust*(progress*progress*120) * side;
+              leaf.style.left = `${initLeft + x_off}px`;
+              // Rotasi
+              let r_now = rot0 + rotDelta * progress + (progress > 0.2 ? Math.sin(progress*Math.PI*2)*16*side : 0);
+              leaf.style.transform = `rotate(${r_now}deg)`;
+              // Opacity at the ending
+              if(progress > 0.92)
+                leaf.style.opacity = (1-progress)/0.08 * 0.6;
+              requestAnimationFrame(animateLeaf);
+            }
+            leavesContainer.appendChild(leaf);
+            requestAnimationFrame(animateLeaf);
+          }
+
+          // produce leaves periodically
+          let leafTimer = null;
+          function spawnLeaves() {
+            // Number of leaves per second, adjust as you like
+            const leavesPerSec = Math.floor(screenW()/280)+4;
+            for(let i=0;i<leavesPerSec;i++)
+              setTimeout(createLeaf, randomBetween(0,1000));
+            leafTimer = setTimeout(spawnLeaves, 1250 + Math.random()*350);
+          }
+
+          // Reset on resize
+          window.addEventListener('resize', ()=>{
+            // No need to remove leaves. New ones use new width/height.
+          });
+
+          // Start effect
+          document.addEventListener('DOMContentLoaded', ()=>{
+            spawnLeaves();
+          });
+        })();
+        // END FALLING LEAVES
 
         document.addEventListener('DOMContentLoaded', function() {
           var audio = document.getElementById('backgroundAudio');
