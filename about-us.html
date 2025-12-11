@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        overflow-x: hidden;
+      }
+
+      body {
+        background: linear-gradient(to bottom right, #b2bfd4, #f1dd76);
+      }
+
+      .container {
+        position: relative;
+        width: 100%;
+        min-height: auto;
+        margin-bottom: 32px;
+      }
+
+      .container:last-child {
+        margin-bottom: 0;
+      }
+
+      .about-me {
+        position: relative;
+        padding: 50px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .about-me-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 40px;
+        margin: 20px auto;
+        flex-wrap: wrap;
+        max-width: 1100px;
+        width: calc(100% - 100px);
+      }
+
+      .about-me-profile {
+        width: 300px;
+        height: auto;
+        border-radius: 8px;
+        flex: 0 0 300px;
+        object-fit: cover;
+      }
+
+      .about-me-text {
+        max-width: 760px;
+        flex: 1 1 400px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .about-me h1 {
+        text-align: left;
+        font-weight: 800;
+        font-size: 64px;
+        margin: 40px 0 20px 0;
+        max-width: 1100px;
+        width: calc(100% - 100px);
+      }
+
+      .about-me p {
+        font-size: 18px;
+        color: #333;
+        margin: 10px 0;
+        line-height: 1.6;
+      }
+
+      .nav {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 18px 40px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .header {
+        position: absolute;
+        top: -10px;
+        left: 0;
+        width: 100%;
+        height: 120px;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .header-img {
+        position: absolute;
+        left: 10px;
+        top: -8px;
+        width: 240px;
+        height: auto;
+      }
+
+      .header-img-2 {
+        position: absolute;
+        right: 10px;
+        top: -8px;
+        width: 320px;
+        height: auto;
+      }
+
+      @media (max-width: 900px) {
+        .header-img-2 { width: 180px; right: 8px; }
+        .header-img { width: 160px; left: 8px; }
+        .navbar-logo-text, .nav-item { padding: 8px 14px; font-size: 14px; }
+      }
+
+      .interests {
+        padding: 60px 50px;
+      }
+
+      .interests h1 {
+        font-weight: 800;
+        font-size: 48px;
+        margin-bottom: 16px;
+        text-align: left;
+      }
+
+      .interests .about-me-text {
+        max-width: 900px;
+        margin-bottom: 40px;
+        text-align: left;
+      }
+
+      .interest-row {
+        display: flex;
+        gap: 80px;
+        justify-content: center;
+        align-items: flex-start;
+        flex-wrap: wrap;
+      }
+
+      .interest-item {
+        flex: 0 0 260px;
+        text-align: center;
+      }
+
+      .interest-item img {
+        width: 260px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+      }
+
+      .interest-item p {
+        margin-top: 12px;
+        color: #333;
+        font-size: 16px;
+      }
+
+      @media (max-width: 800px) {
+        .about-me h1 {
+          font-size: 40px;
+          text-align: center;
+        }
+        .interest-row {
+          gap: 24px;
+        }
+        .interest-item {
+          flex: 0 0 45%;
+        }
+        .about-me, .interests {
+          padding: 32px 12px;
+        }
+        .container {
+          margin-bottom: 18px;
+        }
+      }
+
+
+    </style>
+</head>
+<body>
+  <div style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-1;pointer-events:none;">
+    <img src="/asset/backgrround_lp.png" alt="Background Leaf" style="width:100vw;height:100vh;object-fit:cover;position:absolute;left:0;top:0;">
+  </div>
+  <section style="background: rgba(193, 248, 202, 0.507); border-radius: 24px; margin: 36px auto 0 auto; max-width: 1200px; box-shadow: 0 4px 24px 0 rgba(0,0,0,0.09);">
+    
+    
+    <div class="container">
+        <div class="about-me">
+            <h1 style="font-size: 36px;">Tentang Saya</h1>
+            <div class="about-me-row">
+              <img class="about-me-profile" src="/asset/profile about us.png" alt="" style="width:360px; max-width:100%; height:auto;">
+              <div class="about-me-text">
+                <p>Halo semuanya! Aku Rossy Fadhilah, tapi kalian boleh panggil aku Ochi biar lebih akrab. Sekarang aku kuliah di jurusan PGSD di IKIP Siliwangi, Cimahi tempat aku belajar cara menjadi guru yang seru dan penuh ide kreatif! <br><br>
+                  Sejak tahun 2023, aku sudah mengajar anak-anak SD, dan itu membuat aku semakin suka berbagi ilmu dengan cara yang menyenangkan. Karena itulah aku membuat media pembelajaran super seru ini, ada video pembelajaran dan permainan ular tangga yang bisa bantu kalian belajar operasi hitung campuran tanpa bosan! <br><br>
+                  Semoga permainan ini bisa jadi teman belajar kalian, bikin matematika jadi lebih gampang, dan tentu saja… lebih FUN!</p>
+              </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="interests" style="text-align: left;">
+            <h1 style="text-align:left; font-size:28px;">Minat dan Hobi</h1>
+            <div class="about-me-text" style="align-items: flex-start; text-align: left;">
+              <p>Selain suka mengajar dan membuat media belajar yang seru, aku juga punya beberapa hobi yang bikin hari-hariku lebih berwarna.<br><br>
+                Aku suka menyanyi karena rasanya menyenangkan bisa bernyanyi sambil mengekspresikan diri. Aku juga suka belajar hal-hal baru, apalagi yang bisa bikin aku jadi guru yang lebih baik untuk kalian. Dan tentu saja… aku suka jajan. Karena menurutku, belajar sambil menikmati camilan enak itu bikin semangat makin naik</p>
+            </div>
+            <div class="custom-center-hover">
+              Semoga Hobi-hobi Ini Bikin Kalian Lebih Kenal Sama Aku Ya..
+            </div>
+            <style>
+              .custom-center-hover {
+                font-weight: bold;
+                text-align: center;
+                margin: 18px 0 10px 0;
+                text-transform: capitalize;
+                transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+                display: block;
+              }
+              .custom-center-hover:hover {
+                transform: scale(1.08);
+              }
+            </style>
+            <div style="height: 32px;"></div>
+
+            <style>
+              .interest-item img {
+                transition: transform 0.3s ease;
+              }
+              .interest-item:hover img {
+                transform: scale(1.08);
+              }
+            </style>
+            <div class="interest-row">
+              <div class="interest-item">
+                <img src="/asset/intro 1.png" alt="Intro 1">
+                <p>Music & Voice</p>
+              </div>
+              <div class="interest-item">
+                <img src="/asset/intro 2.png" alt="Intro 2">
+                <p>Teaching & Books</p>
+              </div>
+              <div class="interest-item">
+                <img src="/asset/intro 3.png" alt="Intro 3">
+                <p>Food & Fun</p>
+              </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

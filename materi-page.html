@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Materi Matematic Game</title>
+  <style>
+    body {
+      background: url("asset/backgrround_lp.png") no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Segoe UI',Arial,sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .back-btn {
+      position: fixed;
+      top: 28px;
+      left: 32px;
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: 0 2px 12px #bda13949;
+      color: #000000;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+      border: none;
+      border-radius: 16px;
+      padding: 10px 20px 10px 20px;
+      cursor: pointer;
+      z-index: 99;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s, box-shadow 0.2s, color 0.2s, transform 0.17s;
+      outline: none;
+    }
+    .back-btn:hover, .back-btn:focus {
+      background: #dddddd;
+      box-shadow: 0 7px 20px #e1d08867;
+      color: #000000;
+      transform: scale(1.04) translateY(-2px);
+      text-decoration: none;
+    }
+    h1 {
+      margin-top: 32px;
+      margin-bottom: 22px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: #000000;
+      background: rgba(255, 255, 255, 0.37);
+      border-radius: 16px;
+      padding: 12px 24px;
+      backdrop-filter: blur(0.7px);
+      -webkit-backdrop-filter: blur(0.7px);
+    }
+    .materi-container {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      gap: 28px;
+      justify-content: center;
+      align-items: stretch;
+      padding: 32px 16px 48px 16px;
+    }
+
+    /* Code shadow effect for cards */
+    .materi-card {
+      background: linear-gradient(135deg, #000000 60%, #000000 100%);
+      border-radius: 18px;
+      /* Enhanced shadow for "code shadow" effect */
+      box-shadow:
+        0 6px 24px 0 #00000080,    /* gold brown long soft code-like shadow */
+        0 4px 36px 4px #ffd80022,  /* yellow soft shadow glow */
+        0 2px 10px #7e5c0520,      /* transparent brown bottom shadow */
+        0 1.5px 0 #fff7c3c0 inset; /* soft highlight on top */
+      padding: 36px 18px 24px 18px;
+      width: 170px;
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: 
+        transform 0.18s cubic-bezier(.19,1,.22,1),
+        box-shadow 0.18s cubic-bezier(.19,1,.22,1);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      background-clip: padding-box;
+      backdrop-filter: blur(1px);
+      -webkit-backdrop-filter: blur(1px);
+      background: rgba(255, 255, 255, 0.644);
+      /* subtle border for code-style focus */
+      border: 1.5px solid #0706039c; 
+    }
+    .materi-card:hover {
+      transform: scale(1.06) translateY(-8px) rotateZ(-0.7deg);
+      box-shadow:
+        0 16px 60px #d5d75584,
+        0 12px 36px #ffea99ba,
+        0 2px 20px #cab87c33;
+      z-index: 2;
+    }
+    .materi-card .icon {
+      font-size: 38px;
+      margin-bottom: 12px;
+      color: #000000;
+      filter: drop-shadow(0 2px 8px #ccb74783);
+      text-shadow: 0 3px 18px #00000028, 0 2px 0 #000000;
+    }
+    .materi-title {
+      font-size: 1.08rem;
+      font-weight: bold;
+      color: #000000;
+      margin-bottom: 7px;
+      letter-spacing: 0.5px;
+      text-align: center;
+      text-shadow: 0 2px 12px #f8de8e82;
+    }
+    .materi-desc {
+      font-size: 0.93rem;
+      color: #1f1506;
+      opacity: 0.87;
+      text-align: center;
+      margin-bottom: 0;
+      line-height: 1.35;
+    }
+    @media (max-width: 900px) {
+      .materi-container {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 18px;
+        justify-content: center;
+        align-items: flex-start;
+      }
+      .materi-card {
+        width: 44vw;
+        min-width: 160px;
+        max-width: 235px;
+        padding: 26px 6vw 16px 6vw;
+      }
+      .back-btn {
+        top: 14px;
+        left: 10px;
+        font-size: 0.98rem;
+        padding: 8px 15px 8px 34px;
+      }
+      .back-btn::before {
+        left: 10px;
+      }
+    }
+    @media (max-width: 800px) {
+      .materi-container {
+        flex-wrap: wrap;
+        flex-direction: row;
+        gap: 16px;
+      }
+      .materi-card {
+        width: 92vw;
+        max-width: 320px;
+        padding: 18px 8vw 12px 8vw;
+        margin-left: 0;
+        margin-right: 0;
+      }
+    }
+    @media (max-width: 600px) {
+      .materi-container {
+        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+      }
+      .materi-card {
+        width: 90vw;
+        min-width: 0;
+        max-width: 98vw;
+        padding: 18px 6vw 10px 6vw;
+      }
+      h1 {
+        font-size: 1.5rem;
+      }
+      .back-btn {
+        font-size: 0.97rem;
+        padding: 8px 12px 8px 32px;
+        top: 6px;
+        left: 4vw;
+      }
+      .back-btn::before {
+        left: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="back-btn" tabindex="0">Kembali</a>
+  <h1>Materi Matematic Game</h1>
+  <div class="materi-container">
+    <div class="materi-card">
+      <div class="icon"><img src="/asset/matematika 2.png" alt="Penjumlahan" style="width:200px;height:200px;object-fit:contain;"></div>
+      <div class="materi-title">Penjumlahan</div>
+      <div class="materi-desc">
+        Belajar teknik dasar dan tips menghitung penjumlahan angka dengan mudah dan cepat.
+      </div>
+    </div>
+    <div class="materi-card">
+      <div class="icon"><img src="/asset/matematika 1.png" alt="Penjumlahan" style="width:200px;height:200px;object-fit:contain;"></div>
+      <div class="materi-title">Pengurangan</div>
+      <div class="materi-desc">
+        Memahami langkah-langkah pengurangan serta cara menyelesaikan soal cerita.
+      </div>
+    </div>
+    <div class="materi-card">
+      <div class="icon"><img src="/asset/matematika 4.png" alt="Penjumlahan" style="width:200px;height:200px;object-fit:contain;"></div>
+      <div class="materi-title">Perkalian</div>
+      <div class="materi-desc">
+        Menjelajahi trik dan latihan soal untuk menguasai perkalian dengan tabel dan pola.
+      </div>
+    </div>
+    <div class="materi-card">
+      <div class="icon"><img src="/asset/matematika 3.png" alt="Penjumlahan" style="width:200px;height:200px;object-fit:contain;"></div>
+      <div class="materi-title">Pembagian</div>
+      <div class="materi-desc">
+        Pelajari pembagian dasar, konsep sisa, dan cara membagi dengan pembagian bersusun.
+      </div>
+    </div>
+  </div>
+</body>
+</html>
