@@ -9,7 +9,7 @@
       html, body {
         font-family: 'Poppins', Arial, Helvetica, sans-serif !important;
         font-weight: 700 !important;
-        overflow: hidden !important; /* Disable scrolling */
+        overflow: hidden !important;
         height: 100%;
       }
       body {
@@ -95,7 +95,6 @@
         transform: translateY(0) scale(0.98);
         box-shadow: 0 2px 8px rgba(0,0,0,0.15);
       }
-      /* Mute-Button Style - pojok kiri atas */
       .mute-toggle-btn {
         position: fixed;
         top: 20px;
@@ -267,7 +266,6 @@
           height: 16px;
         }
       }
-      /* Tambahan: Style untuk copyright agar tidak bold */
       .copyright-text {
         font-family: 'Poppins', Arial, Helvetica, sans-serif;
         font-weight: 400 !important;
@@ -275,9 +273,7 @@
     </style>
   </head>
   <body>
-    <!-- Tombol mute/unmute di pojok kiri atas -->
     <button id="muteToggleBtn" class="mute-toggle-btn" aria-label="Mute / Unmute Audio" title="Mute / Unmute">
-      <!-- Icon tampil nanti oleh JS -->
       <svg id="icon-unmuted" style="display:block;" viewBox="0 0 24 24" fill="none" stroke="#FBB904" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <polygon points="9 9 13 9 17 5 17 19 13 15 9 15 9 9"></polygon>
         <line x1="19" y1="5" x2="19" y2="19"></line>
@@ -328,18 +324,14 @@
         </div>
       </div>
       <script>
-        // Disable all scrolling (in case JS scrolling is attempted)
         document.documentElement.style.overflow = 'hidden';
         document.body.style.overflow = 'hidden';
 
-        // Audio Mute/Unmute logic
         document.addEventListener('DOMContentLoaded', function() {
           var audio = document.getElementById('backgroundAudio');
           var muteBtn = document.getElementById('muteToggleBtn');
           var iconMuted = document.getElementById('icon-muted');
           var iconUnmuted = document.getElementById('icon-unmuted');
-
-          // Persist state
           var savedAudioState = localStorage.getItem('mtkgame-audio-muted');
           if (savedAudioState === "true") {
             audio.muted = true;
@@ -350,13 +342,9 @@
             iconMuted.style.display = "none";
             iconUnmuted.style.display = "block";
           }
-
-          // Play audio on user gesture for browser compliance
           function tryPlayAudio() {
             audio.play().catch(() => {});
           }
-
-          // Toggle handler
           muteBtn.addEventListener('click', function() {
             audio.muted = !audio.muted;
             if(audio.muted){
@@ -370,30 +358,23 @@
               tryPlayAudio();
             }
           });
-
-          // Auto-play if not muted, trigger first interaction for mobile
           window.addEventListener("click", tryPlayAudio, { once: true });
-
-          // Also allow play after button click (first interaction)
           muteBtn.addEventListener('click', tryPlayAudio, { once: true });
-
-          // Try start the audio for some browsers after DOMContentLoaded
           setTimeout(tryPlayAudio, 1000);
         });
 
         document.addEventListener('DOMContentLoaded', function() {
-          // About Me modal logic
           var openBtn = document.getElementById('aboutMeBtn');
           var modal = document.getElementById('aboutMeModal');
           var closeBtn = document.getElementById('closeAboutMe');
           function openModal() {
             modal.style.display = "flex";
             document.body.style.overflow = 'hidden';
-            document.documentElement.style.overflow = 'hidden'; // maintain no scroll
+            document.documentElement.style.overflow = 'hidden';
           }
           function closeModal() {
             modal.style.display = "none";
-            document.body.style.overflow = 'hidden'; // keep scroll disabled
+            document.body.style.overflow = 'hidden';
             document.documentElement.style.overflow = 'hidden';
           }
           openBtn.onclick = openModal;
@@ -405,7 +386,6 @@
             if(ev.key === 'Escape') closeModal();
           });
 
-          // Cara Bermain modal logic
           var caraBtn = document.getElementById('caraMainBtn');
           var caraModal = document.getElementById('caraMainModal');
           var closeCara = document.getElementById('closeCaraMain');
@@ -425,7 +405,6 @@
             if (e.target === caraModal) closeCaraFn();
           };
 
-          // Quiz button logic
           var quizBtn = document.getElementById('quizBtn');
           if (quizBtn) {
             quizBtn.addEventListener('click', function(e) {
@@ -433,7 +412,6 @@
               window.location.href = "ulartangga.html";
             });
           }
-          // Materi button logic
           var materiBtn = document.getElementById('materiBtn');
           if (materiBtn) {
             materiBtn.addEventListener('click', function(e) {
