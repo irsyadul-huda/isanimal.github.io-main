@@ -14,7 +14,7 @@
       --btn-radius: 36px;
       --audio-btn-bg: rgba(255, 255, 255, 0.856);
       --audio-btn-shadow: 0 3px 8px rgba(0,0,0,0.13), 0 0 0 2px #fffbe4;
-      --audio-btn-radius: 50%;  
+      --audio-btn-radius: 50%;
       --audio-btn-size: clamp(28px, 7vw, 46px);
       --volume-slider-orange-dark: #ffe3be;
       --volume-slider-orange-dark-light: #e29120;
@@ -35,16 +35,14 @@
       transition: opacity 0.7s cubic-bezier(.44,.05,.54,1);
     }
     .fadein-body-init { opacity: 0 !important; }
-
-    /* --- FALLING LEAVES STYLES BEGIN (diubah z-index agar daun di belakang) --- */
     .falling-leaves-container {
       pointer-events: none;
       position: fixed;
-      top:0;
-      left:0;
-      width:100vw;
-      height:100vh;
-      z-index:0;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
       overflow: visible !important;
     }
     .leaf {
@@ -56,62 +54,19 @@
       will-change: transform, opacity;
       user-select: none;
     }
-    .leaf.dry svg .leafShape {
-      fill: #C19A6B;
-      stroke: #a07246;
-    }
-    .leaf.green svg .leafShape {
-      fill: #7BC162;
-      stroke: #3a8035;
-    }
-    /* Tambahan varian warna/style dedaunan */
-    .leaf.red svg .leafShape {
-      fill: #e04d22;
-      stroke: #b7330a;
-    }
-    .leaf.orange svg .leafShape {
-      fill: #fbb040;
-      stroke: #f06600;
-    }
-    .leaf.yellow svg .leafShape {
-      fill: #ffe644;
-      stroke: #e7c100;
-    }
-    .leaf.purple svg .leafShape {
-      fill: #b589db;
-      stroke: #7551a7;
-    }
-    .leaf.banana svg .leafShape {
-      fill: #b4ef8a;
-      stroke: #689d30;
-    }
-    .leaf.monstera svg .leafShape {
-      fill: #21b573;
-      stroke: #147a44;
-    }
-    .leaf.svgOak svg .leafShape {
-      fill: #ba8c4b;
-      stroke: #7c5b25;
-    }
-    .leaf.svgGinko svg .leafShape {
-      fill: #ffe763;
-      stroke: #a59b28;
-    }
-    .leaf.svgMaple svg .leafShape {
-      fill: #f46c35;
-      stroke: #a93511;
-    }
-    .leaf.svgTeak svg .leafShape {
-      fill: #8bdbc1;
-      stroke: #177655;
-    }
-    .leaf svg {
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
-    /* --- END FALLING LEAVES STYLES --- */
-
+    .leaf.dry svg .leafShape { fill: #C19A6B; stroke: #a07246; }
+    .leaf.green svg .leafShape { fill: #7BC162; stroke: #3a8035; }
+    .leaf.red svg .leafShape { fill: #e04d22; stroke: #b7330a; }
+    .leaf.orange svg .leafShape { fill: #fbb040; stroke: #f06600; }
+    .leaf.yellow svg .leafShape { fill: #ffe644; stroke: #e7c100; }
+    .leaf.purple svg .leafShape { fill: #b589db; stroke: #7551a7; }
+    .leaf.banana svg .leafShape { fill: #b4ef8a; stroke: #689d30; }
+    .leaf.monstera svg .leafShape { fill: #21b573; stroke: #147a44; }
+    .leaf.svgOak svg .leafShape { fill: #ba8c4b; stroke: #7c5b25; }
+    .leaf.svgGinko svg .leafShape { fill: #ffe763; stroke: #a59b28; }
+    .leaf.svgMaple svg .leafShape { fill: #f46c35; stroke: #a93511; }
+    .leaf.svgTeak svg .leafShape { fill: #8bdbc1; stroke: #177655; }
+    .leaf svg { width: 100%; height: 100%; display: block; }
     .template-mtk-float {
       position: fixed !important;
       z-index: 10 !important;
@@ -733,7 +688,6 @@
   </style>
 </head>
 <body>
-  <!-- HTML: container daun -->
   <div class="falling-leaves-container" id="leavesContainer"></div>
   <div class="fadeout-overlay" id="fadeoutOverlay"></div>
   <div class="fadein-overlay" id="fadeinOverlay"></div>
@@ -821,12 +775,8 @@
       document.getElementById('muteToggleBtn').style.pointerEvents = 'auto';
       document.getElementById('aboutMeBtn-top').style.pointerEvents = 'auto';
 
-      // FALLING LEAVES EFFECT (DAUN LEBIH SEDIKIT & POSISI DI BELAKANG)
       (function fallingLeaves(){
-
-        // SVG daun berbagai macam jenis
         const leafVariants = [
-          // 0: Daun kering (brown/oranye standar, default)
           {
             svg: `<svg viewBox="0 0 36 38">
               <path class="leafShape" d="M18,2 C16,11 3,13 2,23 C1,31 12,36 19,36 C27,36 34,30 33,20 C32,10 21,9 18,2 Z"/>
@@ -834,7 +784,6 @@
             </svg>`,
             class: "dry"
           },
-          // 1: Daun hijau
           {
             svg: `<svg viewBox="0 0 36 38">
               <path class="leafShape" d="M18,4 C14,12 5,15 5,25 C5,32 18,36 23,31 C29,25 34,17 26,11 C23,9 20,4 18,4 Z"/>
@@ -842,70 +791,60 @@
             </svg>`,
             class: "green"
           },
-          // 2: Daun merah maple
           {
             svg: `<svg viewBox="0 0 38 38">
               <path class="leafShape" d="M19 2 L22 12 L34 10 L26 17 L36 19 L26 21 L32 29 L22.5 23.5 L21 36 L19 24 L17 36 L15.5 23.5 L6 29 L12 21 L2 19 L12 17 L4 10 L16 12 Z" />
             </svg>`,
             class: "svgMaple"
           },
-          // 3: Daun oak (besar, lobed)
           {
             svg: `<svg viewBox="0 0 40 38">
               <path class="leafShape" d="M20,2 C17,7 7,6 9,13 C3,15 7,20 13,18 C7,25 16,24 17,22 C13,33 27,32 23,22 C31,25 32,15 27,15 C34,13 31,6 25,10 C24,6 20,2 20,2 Z"/>
             </svg>`,
             class: "svgOak"
           },
-          // 4: Daun pisang (banana)
           {
             svg: `<svg viewBox="0 0 36 40">
               <path class="leafShape" d="M30,8 Q22,6 14,19 Q13,3 6,6 Q11,19 13,37 Q22,38 29,19 Q23,29 15,32 Q27,27 30,8 Z"/>
             </svg>`,
             class: "banana"
           },
-          // 5: Daun monstera (daun bolong-hijau tropis)
           {
             svg: `<svg viewBox="0 0 36 38">
               <path class="leafShape" d="M21,5 Q32,9 29,17 Q35,15 28,25 Q36,28 24,32 Q32,37 16,34 Q11,38 8,26 Q2,28 7,17 Q2,14 14,10 Q7,7 17,5 Q13,3 18,5 Q23,2 21,5 Z"/>
             </svg>`,
             class: "monstera"
           },
-          // 6: Daun ginko (kipas kuning)
           {
             svg: `<svg viewBox="0 0 36 34">
               <path class="leafShape" d="M18,31 Q12,23 5,20 Q1,10 8,3 Q14,3 18,9 Q22,3 28,3 Q35,10 31,20 Q24,23 18,31 Z"/>
             </svg>`,
             class: "svgGinko"
           },
-          // 7: Daun maple oranye
           {
             svg: `<svg viewBox="0 0 38 38">
               <path class="leafShape" d="M19 2 L21 11 L36 8 L26 15 L36 20 L26 22 L32 32 L21.5 24.5 L21 36 L19 25 L17 36 L16.5 24.5 L6 32 L11 22 L2 20 L12 15 L2 8 L17 11 Z" />
             </svg>`,
             class: "orange"
           },
-          // 8: Daun kuning (menggunakan path maple modif)
           {
             svg: `<svg viewBox="0 0 38 38">
               <path class="leafShape" d="M19 3 L22 9 L33 8 L26 16 L33 18 L26 21 L32 29 L22.5 21.5 L19 36 L15.5 21.5 L6 29 L11 21 L3 18 L10 16 L3 8 L16 9 Z" />
             </svg>`,
             class: "yellow"
           },
-          // 9: Daun ungu (bentuk seperti almond)
           {
             svg: `<svg viewBox="0 0 34 38">
               <path class="leafShape" d="M17,3 Q4,22 17,35 Q30,22 17,3 Z" />
             </svg>`,
             class: "purple"
           },
-          // 10: Daun biru-hijau (teak, tropis)
           {
             svg: `<svg viewBox="0 0 40 40">
               <path class="leafShape" d="M20,7 Q8,24 20,38 Q32,24 20,7 Z" />
             </svg>`,
             class: "svgTeak"
-          },
-          // -- tambahkan lebih banyak bentuk di sini jika perlu --
+          }
         ];
 
         const leavesContainer = document.getElementById('leavesContainer');
@@ -917,67 +856,53 @@
         }
 
         function createLeaf() {
-          // Pilih indeks random dari varian daun
-          // (dengan probabilitas lebih banyak yang utama: brown/hijau/orange/yellow/maple)
           let choices = [];
-          // Atur bobot, default daun utama lebih banyak
           for (let i = 0; i < leafVariants.length; ++i) {
             let weight = 1;
             if (["dry","green","orange","yellow","svgMaple"].includes(leafVariants[i].class)) weight = 2.3;
             if (["banana", "monstera", "svgGinko", "svgOak", "svgTeak"].includes(leafVariants[i].class)) weight = 1.1;
             if (["purple"].includes(leafVariants[i].class)) weight = 0.75;
-            // duplikasikan entri sbg bobot
-            for (let j=0; j<weight*2; ++j) choices.push(i);
+            for (let j = 0; j < weight * 2; ++j) choices.push(i);
           }
-          const idx = choices[Math.floor(Math.random()*choices.length)];
+          const idx = choices[Math.floor(Math.random() * choices.length)];
           const typeClass = leafVariants[idx].class;
           const leaf = document.createElement('div');
           leaf.className = `leaf ${typeClass}`;
           leaf.innerHTML = leafVariants[idx].svg;
-
-          // initial position and styles
           const size = randomBetween(23, 39);
           leaf.style.width = `${size}px`;
-          leaf.style.height = `${size+3}px`;
-          const left = randomBetween(-20, screenW()+20);
+          leaf.style.height = `${size + 3}px`;
+          const left = randomBetween(-20, screenW() + 20);
           leaf.style.left = left + "px";
-          leaf.style.top = randomBetween(-50,-20) + "px";
-          leaf.style.opacity = randomBetween(0.72,1);
-
-          // random animation params
-          const duration = randomBetween(8,18.5);
+          leaf.style.top = randomBetween(-50, -20) + "px";
+          leaf.style.opacity = randomBetween(0.72, 1);
+          const duration = randomBetween(8, 18.5);
           const swing = randomBetween(40, 140);
-          const rot0 = randomBetween(-20,20);
-          const rot = randomBetween(-95,95);
-
-          // Animate
+          const rot0 = randomBetween(-20, 20);
+          const rot = randomBetween(-95, 95);
           let start = null;
           let y = parseFloat(leaf.style.top);
           const initLeft = left;
           let side = Math.random() > 0.5 ? 1 : -1;
-          let gust = randomBetween(0.4,1.8);
+          let gust = randomBetween(0.4, 1.8);
           let swayCoef = randomBetween(1, 2.3) * (side);
           let rotDelta = rot - rot0;
 
-          function animateLeaf(ts){
-            if(!start) start=ts;
-            let progress = (ts-start)/(duration*1000);
-            if(progress > 1){
+          function animateLeaf(ts) {
+            if (!start) start = ts;
+            let progress = (ts - start) / (duration * 1000);
+            if (progress > 1) {
               leaf.remove();
               return;
             }
-            // vertical progress
             let y_now = y + progress * (screenH() + 50);
             leaf.style.top = `${y_now}px`;
-            // swing left-right
-            let x_off = Math.sin( (progress + swayCoef) * Math.PI * 2) * swing + gust*(progress*progress*120) * side;
+            let x_off = Math.sin((progress + swayCoef) * Math.PI * 2) * swing + gust * (progress * progress * 120) * side;
             leaf.style.left = `${initLeft + x_off}px`;
-            // Rotasi
-            let r_now = rot0 + rotDelta * progress + (progress > 0.2 ? Math.sin(progress*Math.PI*2)*16*side : 0);
+            let r_now = rot0 + rotDelta * progress + (progress > 0.2 ? Math.sin(progress * Math.PI * 2) * 16 * side : 0);
             leaf.style.transform = `rotate(${r_now}deg)`;
-            // Opacity at the ending
-            if(progress > 0.92)
-              leaf.style.opacity = (1-progress)/0.08 * 0.6;
+            if (progress > 0.92)
+              leaf.style.opacity = (1 - progress) / 0.08 * 0.6;
             requestAnimationFrame(animateLeaf);
           }
 
@@ -985,24 +910,18 @@
           requestAnimationFrame(animateLeaf);
         }
 
-        // produce leaves periodically
         let leafTimer = null;
         function spawnLeaves() {
-          const leavesPerSec = Math.max(1, Math.floor(screenW()/350));
-          for(let i=0;i<leavesPerSec;i++)
-            setTimeout(createLeaf, randomBetween(0,1200));
-          leafTimer = setTimeout(spawnLeaves, 1900 + Math.random()*700);
+          const leavesPerSec = Math.max(1, Math.floor(screenW() / 350));
+          for (let i = 0; i < leavesPerSec; i++)
+            setTimeout(createLeaf, randomBetween(0, 1200));
+          leafTimer = setTimeout(spawnLeaves, 1900 + Math.random() * 700);
         }
-
-        // Start effect
-        document.addEventListener('DOMContentLoaded', ()=>{
+        document.addEventListener('DOMContentLoaded', () => {
           spawnLeaves();
         });
-
       })();
-      // END FALLING LEAVES
 
-      // ---- (code lain tidak berubah) ----
       document.addEventListener('DOMContentLoaded', function () {
         function forwardClick(idFrom, idTo) {
           const src = document.getElementById(idFrom);
@@ -1018,12 +937,12 @@
         var aboutMeBtnTop = document.getElementById('aboutMeBtn-top');
         var fadeoutOverlay = document.getElementById('fadeoutOverlay');
         if (aboutMeBtnTop && fadeoutOverlay) {
-          aboutMeBtnTop.addEventListener('click', function(e) {
+          aboutMeBtnTop.addEventListener('click', function (e) {
             if (aboutMeBtnTop.getAttribute('href') === 'about-us.html' && e.button === 0 && !e.ctrlKey && !e.metaKey && !e.shiftKey && !e.altKey) {
               e.preventDefault();
-              try { sessionStorage.setItem('aboutme_returned', '1'); } catch (err) {}
+              try { sessionStorage.setItem('aboutme_returned', '1'); } catch (err) { }
               fadeoutOverlay.classList.add('show');
-              setTimeout(function() {
+              setTimeout(function () {
                 window.location.href = aboutMeBtnTop.getAttribute('href');
               }, 700);
             }
@@ -1057,7 +976,7 @@
           };
         }
         var caraBarBtn = document.getElementById('caraMainBtn-bar');
-        if (caraBarBtn) caraBarBtn.onclick = function(e) { e.preventDefault(); openCara(); };
+        if (caraBarBtn) caraBarBtn.onclick = function (e) { e.preventDefault(); openCara(); };
 
         document.addEventListener('keydown', function (evt) {
           if (caraModal && caraModal.classList.contains('cara-main-anim')) {
@@ -1093,16 +1012,16 @@
         if (fadeinOverlay) {
           if (sessionStorage.getItem('aboutme_returned') === '1') {
             fadeinOverlay.classList.remove('hide');
-            try { sessionStorage.removeItem('aboutme_returned'); } catch (e){}
-            setTimeout(function() {
+            try { sessionStorage.removeItem('aboutme_returned'); } catch (e) { }
+            setTimeout(function () {
               fadeinOverlay.classList.add('hide');
-              setTimeout(function(){
+              setTimeout(function () {
                 fadeinOverlay.style.display = 'none';
               }, 750);
             }, 25);
           } else {
             fadeinOverlay.classList.add('hide');
-            setTimeout(function(){
+            setTimeout(function () {
               fadeinOverlay.style.display = 'none';
             }, 50);
           }
