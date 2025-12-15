@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Materi Matematic Game</title>
   <style>
+    :root {
+      --audio-btn-bg: rgba(255, 255, 255, 0.856);
+      --audio-btn-shadow: 0 3px 8px rgba(0,0,0,0.13), 0 0 0 2px #fffbe4;
+      --audio-btn-radius: 50%;
+      --audio-btn-size: clamp(28px, 7vw, 46px);
+      --volume-slider-orange-dark: #ffe3be;
+      --volume-slider-orange-dark-light: #e29120;
+    }
     body {
       background: url("asset/backgrround_lp.png") no-repeat center center fixed;
       background-size: cover;
@@ -15,34 +23,267 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      opacity: 0;
+      transition: opacity 0.7s cubic-bezier(.44,.05,.54,1);
     }
-    .back-btn {
+    body.fadein {
+      opacity: 1;
+    }
+
+    /* Top button bar: container for back and audio buttons */
+    .top-btn-bar {
       position: fixed;
-      top: 28px;
-      left: 32px;
-      background: rgba(255, 255, 255, 0.72);
-      box-shadow: 0 2px 12px #bda13949;
-      color: #000000;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1rem;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      gap: 20px; /* Jarak ideal antara tombol */
+      z-index: 401;
+      pointer-events: none;
+    }
+
+    .back-btn {
+      background: linear-gradient(90deg, #ffe299 0%, #ffc94e 100%);
+      box-shadow:
+        0 2px 12px #bda13950,
+        0 0.5px 0 #fffbe7 inset;
       border: none;
-      border-radius: 16px;
-      padding: 10px 20px 10px 20px;
+      border-radius: 50%;
+      padding: 0;
+      width: 48px;
+      height: 48px;
       cursor: pointer;
-      z-index: 99;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      outline: none;
+      overflow: hidden;
+      transition: background 0.22s cubic-bezier(.19,1,.22,1), box-shadow 0.18s cubic-bezier(.19,1,.22,1), transform 0.17s cubic-bezier(.19,1,.22,1);
+      z-index: 402;
+      pointer-events: auto;
+      position: static;
+    }
+    .back-btn:hover,
+    .back-btn:focus {
+      background: linear-gradient(90deg, #ffe299 15%, #ffc94e 93%);
+      box-shadow: 0 8px 26px #e1d0885e, 0 2px 10px #ffeda185;
+      transform: scale(1.13) translateY(-2px);
+    }
+    .back-btn:active {
+      transform: scale(0.97) translateY(1px);
+      box-shadow: 0 2px 9px #cfbc6370;
+    }
+    .back-btn .icon-home {
+      display: block;
+      width: 25px;
+      height: 25px;
+      min-width: 25px;
+      min-height: 25px;
+      fill: #775204;
+      filter: drop-shadow(0 1px 5px #fffde3c0);
+      pointer-events: none;
+      transition: fill 0.18s;
+    }
+    .back-btn:hover .icon-home,
+    .back-btn:focus .icon-home {
+      fill: #b3811e;
+    }
+
+    /* AUDIO BUTTON DROPDOWN STYLE */
+    .mute-toggle-btn {
+      /* Not fixed so that it sits in flex bar */
+      width: var(--audio-btn-size);
+      height: var(--audio-btn-size);
+      background: var(--audio-btn-bg);
+      box-shadow: var(--audio-btn-shadow);
+      border-radius: var(--audio-btn-radius);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      transition: box-shadow 0.19s, background 0.18s;
+      z-index: 402;
+      pointer-events: auto;
+      position: static;
+    }
+    .mute-toggle-btn:active {
+      background: #ffe7a857;
+    }
+    .audio-dropdown-container {
+      position: absolute;
+      top: 69px;     /* Adjust to below the button bar */
+      left: 0px;
+      z-index: 34000;
+      user-select: none;
+      pointer-events: none;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+    }
+    .audio-dropdown {
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 145px;
+      background: #fffbe4f3;
+      box-shadow: 0 6px 26px #cfbf70a9;
+      border-radius: 17px;
+      margin-top: 0px;
+      margin-left: 68px; /* Offset dialog so it aligns under audio button */
+      padding: 15px 18px 16px 20px;
+      z-index: 1;
+      position: absolute;
+      left: 0; 
+      top: 0;
+      opacity: 0;
+      transform: translateY(-14px) scale(0.96);
+      transition: opacity 0.24s, transform 0.32s;
+    }
+    .audio-dropdown.show {
+      pointer-events: auto;
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      transition: opacity 0.27s, transform 0.38s cubic-bezier(.55,.38,.54,1.13);
+    }
+    .audio-volume-slider-wrap {
       display: flex;
       align-items: center;
       gap: 8px;
-      transition: background 0.2s, box-shadow 0.2s, color 0.2s, transform 0.17s;
-      outline: none;
     }
-    .back-btn:hover, .back-btn:focus {
-      background: #dddddd;
-      box-shadow: 0 7px 20px #e1d08867;
-      color: #000000;
-      transform: scale(1.04) translateY(-2px);
-      text-decoration: none;
+    .audio-volume-min,
+    .audio-volume-max {
+      font-size: 0.97em;
+      color: #aa8a27;
+      user-select: none;
+      font-family: inherit;
+    }
+    .audio-volume-mute-mini {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      margin-right: 1px;
+      margin-left: 2px;
+      width: 19px;
+      height: 20px;
+      background: none;
+      border: none;
+      outline: none;
+      box-shadow: none;
+      padding: 0 !important;
+      transition: background 0.18s;
+    }
+    .audio-volume-mute-mini:active {
+      background: #ffe7a857;
+      border-radius: 12px;
+    }
+    .audio-volume-mute-mini svg {
+      display: block;
+      width: 16px;
+      height: 16px;
+      min-width: 16px;
+      min-height: 16px;
+      stroke: #FBB904;
+      transition: stroke 0.16s;
+    }
+    .audio-volume-mute-mini.muted svg {
+      stroke: #999;
+    }
+    /* VOLUME SLIDER ORANGE DARK STYLE */
+    .audio-volume-slider {
+      accent-color: var(--volume-slider-orange-dark);
+      width: 100px;
+      height: 5px;
+      border-radius: 6px;
+      background: none;
+      outline: none;
+      margin: 0 6px;
+    }
+    .audio-volume-slider::-webkit-slider-runnable-track {
+      height: 5px;
+      border-radius: 4px;
+      background: linear-gradient(90deg, var(--volume-slider-orange-dark), var(--volume-slider-orange-dark-light));
+    }
+    .audio-volume-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--volume-slider-orange-dark);
+      border: 2px solid #fffbe4;
+      box-shadow: 0 2px 6px #ce8a1c42;
+      cursor: pointer;
+      margin-top: -5.5px;
+      transition: background 0.15s;
+    }
+    .audio-volume-slider:focus::-webkit-slider-thumb {
+      background: #a95f08;
+      outline: 2px solid var(--volume-slider-orange-dark);
+    }
+    .audio-volume-slider::-webkit-slider-thumb:hover,
+    .audio-volume-slider:active::-webkit-slider-thumb {
+      background: #a95f08;
+    }
+    .audio-volume-slider::-moz-range-track {
+      height: 5px;
+      border-radius: 4px;
+      background: linear-gradient(90deg, var(--volume-slider-orange-dark), var(--volume-slider-orange-dark-light));
+    }
+    .audio-volume-slider::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--volume-slider-orange-dark);
+      border: 2px solid #fffbe4;
+      box-shadow: 0 2px 6px #ce8a1c42;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .audio-volume-slider:focus::-moz-range-thumb {
+      background: #a95f08;
+      outline: 2px solid var(--volume-slider-orange-dark);
+    }
+    .audio-volume-slider::-moz-range-thumb:hover,
+    .audio-volume-slider:active::-moz-range-thumb {
+      background: #a95f08;
+    }
+    .audio-volume-slider:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--volume-slider-orange-dark-light);
+    }
+
+    /* Responsive for top bar */
+    @media (max-width: 900px) {
+      .top-btn-bar {
+        top: 12px;
+        left: 8px;
+        gap: 10px;
+      }
+      .back-btn {
+        width: 41px; height: 41px;
+      }
+      .back-btn .icon-home { width: 20px; height: 20px; min-width:20px; min-height:20px;}
+    }
+    @media (max-width: 600px) {
+      .top-btn-bar {
+        top: 7px;
+        left: 2vw;
+        gap: 7px;
+      }
+      .back-btn {
+        width: 37px;
+        height: 37px;
+      }
+      .back-btn .icon-home { width: 16px; height:16px; min-width:16px; min-height:16px;}
+      .audio-volume-slider { width: 70px; }
+      .audio-dropdown-container {
+        top: 53px;
+      }
     }
     h1 {
       margin-top: 32px;
@@ -65,24 +306,21 @@
       align-items: stretch;
       padding: 32px 16px 48px 16px;
     }
-
-    /* Code shadow effect for cards */
     .materi-card {
       background: linear-gradient(135deg, #000000 60%, #000000 100%);
       border-radius: 18px;
-      /* Enhanced shadow for "code shadow" effect */
       box-shadow:
-        0 6px 24px 0 #00000080,    /* gold brown long soft code-like shadow */
-        0 4px 36px 4px #ffd80022,  /* yellow soft shadow glow */
-        0 2px 10px #7e5c0520,      /* transparent brown bottom shadow */
-        0 1.5px 0 #fff7c3c0 inset; /* soft highlight on top */
+        0 6px 24px 0 #00000080,
+        0 4px 36px 4px #ffd80022,
+        0 2px 10px #7e5c0520,
+        0 1.5px 0 #fff7c3c0 inset;
       padding: 36px 18px 24px 18px;
       width: 170px;
       min-height: 180px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      transition: 
+      transition:
         transform 0.18s cubic-bezier(.19,1,.22,1),
         box-shadow 0.18s cubic-bezier(.19,1,.22,1);
       cursor: pointer;
@@ -92,8 +330,7 @@
       backdrop-filter: blur(1px);
       -webkit-backdrop-filter: blur(1px);
       background: rgba(255, 255, 255, 0.644);
-      /* subtle border for code-style focus */
-      border: 1.5px solid #0706039c; 
+      border: 1.5px solid #0706039c;
     }
     .materi-card:hover {
       transform: scale(1.06) translateY(-8px) rotateZ(-0.7deg);
@@ -141,15 +378,6 @@
         max-width: 235px;
         padding: 26px 6vw 16px 6vw;
       }
-      .back-btn {
-        top: 14px;
-        left: 10px;
-        font-size: 0.98rem;
-        padding: 8px 15px 8px 34px;
-      }
-      .back-btn::before {
-        left: 10px;
-      }
     }
     @media (max-width: 800px) {
       .materi-container {
@@ -181,20 +409,43 @@
       h1 {
         font-size: 1.5rem;
       }
-      .back-btn {
-        font-size: 0.97rem;
-        padding: 8px 12px 8px 32px;
-        top: 6px;
-        left: 4vw;
-      }
-      .back-btn::before {
-        left: 10px;
-      }
     }
   </style>
 </head>
 <body>
-  <a href="index.html" class="back-btn" tabindex="0">Kembali</a>
+  <!-- TOP BAR WITH BACK AND AUDIO BUTTON, RAPAT DAN RAPI -->
+  <div class="top-btn-bar">
+    <a href="index.html" class="back-btn" tabindex="0" aria-label="Back to Home">
+      <svg class="icon-home" viewBox="0 0 32 32">
+        <path d="M17 28v-8h-2v8H8V18H4.586L16 6.586 27.414 18H24v10h-7Zm-8-12V28.001 16Zm14 12h3V17h2.414L16 4.586 3.586 17H6v11h4v-8a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v8Z"/>
+      </svg>
+    </a>
+    <button id="muteToggleBtn" class="mute-toggle-btn" aria-label="Mute / Unmute Audio" title="Mute / Unmute">
+      <svg id="icon-mute-toggle" viewBox="0 0 24 24" fill="none" stroke="#FBB904" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24">
+        <polygon id="icon-mute-toggle-polygon" points="9 9 13 9 17 5 17 19 13 15 9 15 9 9"/>
+        <line id="icon-mute-toggle-line" x1="19" y1="5" x2="19" y2="19"></line>
+      </svg>
+    </button>
+    <!-- Audio dropdown sits right underneath bar (absolute) -->
+    <div class="audio-dropdown-container" style="position:absolute;left:0;top:69px;width:350px;max-width:90vw;">
+      <div id="audioDropdown" class="audio-dropdown">
+        <div class="audio-volume-slider-wrap">
+          <button class="audio-volume-mute-mini" id="audioMuteMiniBtn" type="button" aria-label="Mute/Unmute (Mini)">
+            <svg id="audioMuteMiniIcon" viewBox="0 0 24 24" fill="none" stroke="#FBB904" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon id="audioMuteMiniPoly" points="9 9 13 9 17 5 17 19 13 15 9 15 9 9"/>
+              <line id="audioMuteMiniLine" x1="19" y1="5" x2="19" y2="19"></line>
+            </svg>
+          </button>
+          <span class="audio-volume-min">0</span>
+          <input type="range" min="0" max="100" value="100" class="audio-volume-slider" id="audioVolumeSlider" aria-label="Volume" />
+          <span class="audio-volume-max">100</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- AUDIO ELEMENT -->
+  <audio id="backgroundAudio" src="audio-materi.mp3" loop></audio>
+  
   <h1>Materi Matematic Game</h1>
   <div class="materi-container">
     <div class="materi-card">
@@ -226,5 +477,194 @@
       </div>
     </div>
   </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      setTimeout(function () {
+        document.body.classList.add('fadein');
+      }, 20);
+
+      // Audio button logic
+      var audio = document.getElementById('backgroundAudio');
+      var muteBtn = document.getElementById('muteToggleBtn');
+      var iconMain = document.getElementById('icon-mute-toggle');
+      var iconPolygonMain = document.getElementById('icon-mute-toggle-polygon');
+      var iconLineMain = document.getElementById('icon-mute-toggle-line');
+      var audioDropdown = document.getElementById('audioDropdown');
+      var audioVolumeSlider = document.getElementById('audioVolumeSlider');
+      var audioMuteMiniBtn = document.getElementById('audioMuteMiniBtn');
+      var audioMuteMiniIcon = document.getElementById('audioMuteMiniIcon');
+      var audioMuteMiniPoly = document.getElementById('audioMuteMiniPoly');
+      var audioMuteMiniLine = document.getElementById('audioMuteMiniLine');
+
+      // LocalStorage Keys
+      var LS_MUTED = 'mtkgame-audio-muted';
+      var LS_VOLUME = 'mtkgame-audio-volume';
+
+      // State init
+      var savedAudioState = localStorage.getItem(LS_MUTED);
+      var savedAudioVolume = localStorage.getItem(LS_VOLUME);
+
+      function setMuteIcon(isMuted, svgElem, polyElem, lineElem) {
+        if (!svgElem || !polyElem || !lineElem) return;
+        if (isMuted) {
+          polyElem.setAttribute("points", "9 9 13 9 17 5 17 19 13 15 9 15 9 9 9 9");
+          lineElem.setAttribute("x1", "1");
+          lineElem.setAttribute("y1", "1");
+          lineElem.setAttribute("x2", "23");
+          lineElem.setAttribute("y2", "23");
+          svgElem.setAttribute("stroke", "#999");
+        } else {
+          polyElem.setAttribute("points", "9 9 13 9 17 5 17 19 13 15 9 15 9 9");
+          lineElem.setAttribute("x1", "19");
+          lineElem.setAttribute("y1", "5");
+          lineElem.setAttribute("x2", "19");
+          lineElem.setAttribute("y2", "19");
+          svgElem.setAttribute("stroke", "#FBB904");
+        }
+      }
+
+      // Initialize audio state
+      if (savedAudioState === "true") {
+        audio.muted = true;
+      } else {
+        audio.muted = false;
+      }
+      if (savedAudioVolume) {
+        var v = parseFloat(savedAudioVolume);
+        if (!isNaN(v)) {
+          audio.volume = v / 100;
+          audioVolumeSlider.value = Math.round(v);
+        }
+      } else {
+        audio.volume = 1;
+        audioVolumeSlider.value = 100;
+      }
+
+      // Render icons state
+      function renderAudioIcons() {
+        setMuteIcon(audio.muted, iconMain, iconPolygonMain, iconLineMain);
+        setMuteIcon(audio.muted, audioMuteMiniIcon, audioMuteMiniPoly, audioMuteMiniLine);
+        if (audioMuteMiniBtn) {
+          if (audio.muted) audioMuteMiniBtn.classList.add('muted');
+          else audioMuteMiniBtn.classList.remove('muted');
+        }
+      }
+      renderAudioIcons();
+
+      // Auto play audio with fallback retry
+      function playAudioAlways() {
+        if (!audio.muted) {
+          audio.play().then(function () { })
+            .catch(function () { });
+        }
+      }
+      setInterval(playAudioAlways, 2000);
+      window.addEventListener("pointerdown", playAudioAlways, { once: true, passive: true });
+      window.addEventListener("keydown", playAudioAlways, { once: true, passive: true });
+      setTimeout(playAudioAlways, 200);
+
+      // Dropdown toggle logic
+      let dropdownOpen = false;
+      function showDropdown() {
+        dropdownOpen = true;
+        audioDropdown.classList.add('show');
+        setTimeout(() => {
+          audioDropdown.style.pointerEvents = "auto";
+        }, 40);
+        document.body.addEventListener('mousedown', closeDropdownOnBody, true);
+        document.body.addEventListener('touchstart', closeDropdownOnBody, true);
+      }
+      function hideDropdown() {
+        dropdownOpen = false;
+        audioDropdown.classList.remove('show');
+        audioDropdown.style.pointerEvents = "none";
+        setTimeout(() => {
+          document.body.removeEventListener('mousedown', closeDropdownOnBody, true);
+          document.body.removeEventListener('touchstart', closeDropdownOnBody, true);
+        }, 300);
+      }
+      let closeDropdownOnBody = function (e) {
+        if (!dropdownOpen) return;
+        let t = e.target;
+        if (!muteBtn.contains(t) && !audioDropdown.contains(t)) {
+          hideDropdown();
+        }
+      };
+
+      // Main mute button click (toggle dropdown)
+      muteBtn.addEventListener('click', function (evt) {
+        evt.preventDefault();
+        evt.stopPropagation();
+        if (dropdownOpen) {
+          hideDropdown();
+        } else {
+          showDropdown();
+        }
+      });
+
+      // Mini mute button
+      if (audioMuteMiniBtn) {
+        audioMuteMiniBtn.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          audio.muted = !audio.muted;
+          if (audio.muted) {
+            localStorage.setItem(LS_MUTED, "true");
+            audio.pause();
+          } else {
+            localStorage.setItem(LS_MUTED, "false");
+            playAudioAlways();
+          }
+          renderAudioIcons();
+        });
+      }
+
+      // Volume slider
+      audioVolumeSlider.addEventListener('input', function () {
+        let val = Number(audioVolumeSlider.value);
+        let v = isNaN(val) ? 1 : Math.max(0, Math.min(val, 100));
+        audio.volume = v / 100;
+        localStorage.setItem(LS_VOLUME, String(v));
+        if (v === 0) {
+          audio.muted = true;
+          localStorage.setItem(LS_MUTED, "true");
+          audio.pause();
+        } else {
+          if (audio.muted) {
+            audio.muted = false;
+            localStorage.setItem(LS_MUTED, "false");
+            playAudioAlways();
+          }
+        }
+        renderAudioIcons();
+      });
+
+      // Audio volumechange
+      audio.addEventListener('volumechange', function () {
+        let volumePct = Math.round(audio.volume * 100);
+        if (Number(audioVolumeSlider.value) !== volumePct) {
+          audioVolumeSlider.value = volumePct;
+        }
+        renderAudioIcons();
+      });
+
+      // Keyboard: Escape closes dropdown
+      document.addEventListener('keydown', function (ev) {
+        if (dropdownOpen && ev.key === "Escape") hideDropdown();
+      });
+      window.addEventListener('resize', function () {
+        if (dropdownOpen) hideDropdown();
+      });
+
+      // Fade-out effect on back button
+      document.querySelector('.back-btn').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.body.classList.remove('fadein');
+        setTimeout(function() {
+          window.location.href = "index.html";
+        }, 510);
+      });
+    });
+  </script>
 </body>
 </html>
