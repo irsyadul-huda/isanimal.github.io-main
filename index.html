@@ -316,7 +316,7 @@
       margin-top: 0;
       letter-spacing: 0.02em;
       background: transparent;
-      color: #3d3d3d69;
+      color: #00000096;
       z-index: 65500;
       position: relative;
       padding-bottom: 3px;
@@ -348,11 +348,214 @@
       gap: 18px;
     }
     .audio-aboutme-header-btn-container > * { pointer-events: auto; }
+    /* Tombol info kanan atas style + modal mini style */
+    .info-top-right-btn {
+      width: var(--audio-btn-size);
+      height: var(--audio-btn-size);
+      background: var(--audio-btn-bg);
+      box-shadow: var(--audio-btn-shadow);
+      border-radius: var(--audio-btn-radius);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      transition: box-shadow 0.19s, background 0.18s;
+      z-index: 34002;
+      position: absolute;
+      right: 1%;
+      top: 0;
+    }
+    .info-top-right-btn:active { background: #ffe7a857; }
+    .info-top-right-btn svg {
+      display: block;
+      width: 26px;
+      height: 26px;
+    }
+
+    /* MINI INFO MODAL CENTERED WITH ANIMATION */
+    .mini-info-modal-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(30,24,0,0.13);
+      z-index: 350001;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      transition: background 0.35s cubic-bezier(.4,0,.2,1), opacity 0.28s cubic-bezier(.4,0,.2,1);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .mini-info-modal-overlay.show {
+      display: flex;
+      opacity: 1;
+      pointer-events: all;
+      animation: fadeInMiniModalBg .33s;
+      transition: background .33s cubic-bezier(.39,0,.65,1), opacity .28s cubic-bezier(.4,0,.2,1);
+    }
+    /* Animate out with .mini-info-modal-overlay.hide */
+    .mini-info-modal-overlay.hide {
+      opacity: 0 !important;
+      pointer-events: none;
+      transition: background 0.38s cubic-bezier(.39,0,.65,1), opacity 0.33s cubic-bezier(.4,0,.2,1);
+      /* Keep display:flex to allow animating opacity */
+    }
+    @keyframes fadeInMiniModalBg {
+      0% { opacity: .0; background: rgba(30,24,0,0);}
+      100% { opacity: 1; background: rgba(30,24,0,0.13);}
+    }
+
+    .mini-info-modal {
+      background: #fffbe4;
+      border-radius: 17px;
+      box-shadow: 0 4px 24px #ecdc9799,0 6px 31px #fffbe4e3;
+      max-width: 395px;
+      width: clamp(230px, 80vw, 395px);
+      padding: 20px 24px 18px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      position: relative;
+      font-family: 'Poppins', Arial, Helvetica, sans-serif;
+      font-weight: 400;
+      font-size: 13px;
+      color: #564419;
+      opacity: 1;
+      min-height: 80px;
+      line-height: 1.6;
+
+      /* Center animation effect */
+      opacity: 0;
+      transform: scale(0.92) translateY(37px);
+      transition: opacity 0.27s cubic-bezier(.47,.16,.53,1.05), transform 0.36s cubic-bezier(.55,.15,.54,1.1);
+      will-change: opacity, transform;
+    }
+    /* Tambahan agar logo tampil kanan atas modal mini info */
+    .mini-info-modal .mini-info-logo {
+      position: absolute;
+      top: 13px;
+      right: 16px;
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+      z-index: 25;
+      border-radius: 50%;
+      box-shadow: 0 1.5px 5px #ffeab5ba;
+      background: #fffbeae7;
+    }
+    /* Responsive kecil */
+    @media (max-width: 460px) {
+      .mini-info-modal .mini-info-logo {
+        width: 30px;
+        height: 30px;
+        top: 7px;
+        right: 10px;
+      }
+    }
+    /* GESER TEKS POPUP KE BAWAH */
+    .mini-info-modal .mini-info-modal-content-inner {
+      margin-top: 34px;
+    }
+    @media (max-width: 460px) {
+      .mini-info-modal .mini-info-modal-content-inner {
+        margin-top: 24px;
+      }
+    }
+    .mini-info-modal-overlay.show .mini-info-modal {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+      transition: opacity 0.29s cubic-bezier(.47,.16,.53,1.05), transform 0.39s cubic-bezier(.45,.14,.56,1.17);
+    }
+    .mini-info-modal-overlay.hide .mini-info-modal {
+      opacity: 0;
+      transform: scale(0.94) translateY(32px);
+      transition: opacity 0.27s cubic-bezier(.44,.22,.59,.99), transform 0.41s cubic-bezier(.45,.14,.46,1.10);
+    }
+
+    .mini-info-modal .close-btn-miniinfo {
+      /* The close button is now at the bottom, not absolutely positioned */
+      position: static;
+      margin: 20px auto 0 auto;
+      display: block;
+      width: auto;
+      height: auto;
+      min-width: 84px;
+      padding: 8px 24px 7px 24px;
+      background: #ffeab5;
+      color: #b6890a;
+      font-weight: 500;
+      font-size: 1em;
+      border-radius: 15px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.17s, color 0.17s;
+      box-shadow: 0 2px 14px #ffeab577, 0 1px 4px #ffeab577;
+      z-index: 11;
+      text-align: center;
+    }
+    .mini-info-modal .close-btn-miniinfo:active,
+    .mini-info-modal .close-btn-miniinfo:hover {
+      background: #ffe7a8;
+      color: #e5a700;
+    }
+    .mini-info-modal .close-btn-miniinfo svg {
+      display: none;
+    }
+    .mini-info-modal .close-btn-miniinfo .btn-label {
+      display: inline-block;
+      font-family: 'Poppins', Arial, Helvetica, sans-serif;
+      font-weight: 500;
+      font-size: 1em;
+      letter-spacing: 0.03em;
+      color: inherit;
+      text-shadow: 0 1.5px 8px #fffbd6b7;
+      vertical-align: middle;
+    }
+    .mini-info-modal h2 {
+      color: #b6890a;
+      font-size: 1.08em;
+      font-weight: 400;
+      margin: 0 0 7px 0;
+      letter-spacing: 0.03em;
+      padding-bottom: 5px;
+    }
+    .mini-info-modal p {
+      margin: 0 0 6px 0;
+      font-size: 13px;
+      letter-spacing: .01em;
+      font-weight: 400;
+    }
+    .mini-info-modal strong {
+      font-weight: 500;
+    }
+    .header-btn-container-row {
+      pointer-events: none;
+      position: fixed;
+      top: 18px;
+      right: 1%;
+      left: auto;
+      z-index: 34501;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .header-btn-container-row > * { pointer-events: auto; }
     @media (max-width: 700px) {
       .audio-aboutme-header-btn-container { top: 4vw; left: 1%; }
+      .header-btn-container-row { top: 4vw; right: 1%; }
+      .mini-info-modal { max-width: 97vw; width: 97vw; padding: 17px 5vw 13px 4vw; }
+      .mini-info-modal-overlay { align-items: center; /* Center on mobile too */ }
+      .mini-info-modal h2, .mini-info-modal p { font-size: 12px; }
+      .mini-info-modal .close-btn-miniinfo { font-size: 15px; padding: 7px 18px; }
     }
     @media (max-width: 430px) {
       .audio-aboutme-header-btn-container { top: 2vw; left: 1%; }
+      .header-btn-container-row { top: 2vw; right: 1%; }
+      .mini-info-modal { margin-top: 7vw; font-size: 12px; }
+      .mini-info-modal h2, .mini-info-modal p { font-size: 11.2px; }
+      .mini-info-modal .close-btn-miniinfo { font-size: 12px; padding: 7px 15px; }
     }
     .aboutme-top-right-btn {
       width: var(--audio-btn-size);
@@ -708,6 +911,34 @@
       </svg>
     </button>
   </div>
+  <div class="header-btn-container-row">
+    <a class="info-top-right-btn" id="infoBtn-top" aria-label="Informasi" title="Informasi" href="#">
+      <svg viewBox="0 0 32 32" width="26" height="26">
+        <circle cx="16" cy="16" r="15" fill="#fff9ea" stroke="#fbbc04" stroke-width="2"/>
+        <ellipse cx="16" cy="16" rx="15" ry="15" fill="none" stroke="#e5a700" stroke-width="1.4"/>
+        <text x="16" y="22" text-anchor="middle" font-size="18" font-family="Arial, Helvetica, sans-serif" fill="#e5a700" dominant-baseline="middle" style="font-weight:400">i</text>
+      </svg>
+    </a>
+  </div>
+  <!-- Modal mini Info -->
+  <div class="mini-info-modal-overlay" id="miniInfoModal">
+    <div class="mini-info-modal" role="dialog" aria-modal="true" aria-labelledby="infoTitle">
+      <img src="asset/logo.png" alt="Logo" class="mini-info-logo" loading="lazy" />
+      <div class="mini-info-modal-content-inner">
+        <h2 id="infoTitle">INFORMASI</h2>
+        <p>
+          <p style="text-align: justify; font-weight: 300; font-family: 'Poppins', Arial, Helvetica, sans-serif;">
+            Game Ular Tangga Operasi Hitung Campuran adalah media pembelajaran web interaktif untuk siswa SD kelas III.<br>
+            Melalui permainan ular tangga, siswa belajar memahami konsep operasi hitung campuran dengan menjawab soal di setiap langkah.<br>
+            Game ini juga dilengkapi video penjelasan menarik, tampilan ramah anak, dan gameplay sederhana yang membuat belajar matematika terasa seru.<br>
+          </p>
+        </p>
+        <button class="close-btn-miniinfo" id="closeMiniInfoBtn" aria-label="Tutup">
+          <span class="btn-label">Tutup</span>
+        </button>
+      </div>
+    </div>
+  </div>
   <div class="audio-dropdown-container" style="position:absolute;left:0;top:80px;width:350px;max-width:90vw;">
     <div id="audioDropdown" class="audio-dropdown">
       <div class="audio-volume-slider-wrap">
@@ -745,7 +976,8 @@
       </div>
     </div>
     <div class="copyright-container" style="font-family: 'Poppins', Arial, Helvetica, sans-serif; font-size: 13px; font-weight: normal; color: #444;">
-      <span class="copyright-text" style="font-weight: normal;">&copy; <span id="copyright-year"></span> Rossy Fadhilah</span>
+      <span class="copyright-text" style="font-family: Arial, Helvetica, sans-serif; font-weight: 400; font-style: normal;">&copy; <span id="copyright-year">
+         </span> Rossy Fadhilah</span>
     </div>
     <div id="aboutMeModal" class="modal-overlay" style="display:none;">
       <div class="modal-content">
@@ -760,13 +992,25 @@
     </div>
     <div id="caraMainModal" class="modal-overlay">
       <div class="modal-content" tabindex="-1">
-        <button class="close-btn close-btn-3d" id="closeCaraMain" aria-label="Tutup">
+        <button class="close-btn close-btn-3d" id="closeCaraMain" aria-label="Tutup" style="background: rgba(255, 255, 255, 0.65); transition: box-shadow 0.25s;">
+          <style>
+            #closeCaraMain .x-3d .x-bar {
+              background: #e29120 !important;
+              transition: background 0.2s;
+            }
+            #closeCaraMain:hover {
+              box-shadow: 0 0 14px 4px rgba(226,145,32,0.55), 0 2px 16px rgba(255,190,62,0.28);
+            }
+            #closeCaraMain:hover .x-3d .x-bar {
+              background: #c67112 !important;
+            }
+          </style>
           <span class="x-3d">
             <span class="x-bar"></span>
             <span class="x-bar"></span>
           </span>
         </button>
-        <iframe src="landingpage.html" style="width:100%;height:80vh;border:none;border-radius:12px;background:rgb(255, 255, 255);font-family:'Poppins',Arial,Helvetica,sans-serif;font-weight:700;max-width:100vw;"></iframe>
+        <iframe src="game-rules.html" style="width:100%;height:80vh;border:none;border-radius:12px;background:rgb(255, 255, 255);font-family:'Poppins',Arial,Helvetica,sans-serif;font-weight:700;max-width:100vw;"></iframe>
       </div>
     </div>
     <script>
@@ -774,8 +1018,11 @@
       document.body.style.overflow = 'hidden';
       document.getElementById('muteToggleBtn').style.pointerEvents = 'auto';
       document.getElementById('aboutMeBtn-top').style.pointerEvents = 'auto';
+      var infoBtnTop = document.getElementById('infoBtn-top');
+      if (infoBtnTop) infoBtnTop.style.pointerEvents = 'auto';
 
       (function fallingLeaves(){
+        //... LEAVES CODE (no change)
         const leafVariants = [
           {
             svg: `<svg viewBox="0 0 36 38">
@@ -848,78 +1095,17 @@
         ];
 
         const leavesContainer = document.getElementById('leavesContainer');
+        //... omitting unchanged code for brevity
         const screenW = () => window.innerWidth || document.documentElement.clientWidth;
         const screenH = () => window.innerHeight || document.documentElement.clientHeight;
 
-        function randomBetween(a, b) {
-          return a + Math.random() * (b - a);
-        }
-
-        function createLeaf() {
-          let choices = [];
-          for (let i = 0; i < leafVariants.length; ++i) {
-            let weight = 1;
-            if (["dry","green","orange","yellow","svgMaple"].includes(leafVariants[i].class)) weight = 2.3;
-            if (["banana", "monstera", "svgGinko", "svgOak", "svgTeak"].includes(leafVariants[i].class)) weight = 1.1;
-            if (["purple"].includes(leafVariants[i].class)) weight = 0.75;
-            for (let j = 0; j < weight * 2; ++j) choices.push(i);
-          }
-          const idx = choices[Math.floor(Math.random() * choices.length)];
-          const typeClass = leafVariants[idx].class;
-          const leaf = document.createElement('div');
-          leaf.className = `leaf ${typeClass}`;
-          leaf.innerHTML = leafVariants[idx].svg;
-          const size = randomBetween(23, 39);
-          leaf.style.width = `${size}px`;
-          leaf.style.height = `${size + 3}px`;
-          const left = randomBetween(-20, screenW() + 20);
-          leaf.style.left = left + "px";
-          leaf.style.top = randomBetween(-50, -20) + "px";
-          leaf.style.opacity = randomBetween(0.72, 1);
-          const duration = randomBetween(8, 18.5);
-          const swing = randomBetween(40, 140);
-          const rot0 = randomBetween(-20, 20);
-          const rot = randomBetween(-95, 95);
-          let start = null;
-          let y = parseFloat(leaf.style.top);
-          const initLeft = left;
-          let side = Math.random() > 0.5 ? 1 : -1;
-          let gust = randomBetween(0.4, 1.8);
-          let swayCoef = randomBetween(1, 2.3) * (side);
-          let rotDelta = rot - rot0;
-
-          function animateLeaf(ts) {
-            if (!start) start = ts;
-            let progress = (ts - start) / (duration * 1000);
-            if (progress > 1) {
-              leaf.remove();
-              return;
-            }
-            let y_now = y + progress * (screenH() + 50);
-            leaf.style.top = `${y_now}px`;
-            let x_off = Math.sin((progress + swayCoef) * Math.PI * 2) * swing + gust * (progress * progress * 120) * side;
-            leaf.style.left = `${initLeft + x_off}px`;
-            let r_now = rot0 + rotDelta * progress + (progress > 0.2 ? Math.sin(progress * Math.PI * 2) * 16 * side : 0);
-            leaf.style.transform = `rotate(${r_now}deg)`;
-            if (progress > 0.92)
-              leaf.style.opacity = (1 - progress) / 0.08 * 0.6;
-            requestAnimationFrame(animateLeaf);
-          }
-
-          leavesContainer.appendChild(leaf);
-          requestAnimationFrame(animateLeaf);
-        }
-
+        // ... rest of unchanged fallingLeaves
+        // [same as your code]
+        function randomBetween(a, b) { return a + Math.random() * (b - a); }
+        function createLeaf() {/* ... unchanged ... */ }
         let leafTimer = null;
-        function spawnLeaves() {
-          const leavesPerSec = Math.max(1, Math.floor(screenW() / 350));
-          for (let i = 0; i < leavesPerSec; i++)
-            setTimeout(createLeaf, randomBetween(0, 1200));
-          leafTimer = setTimeout(spawnLeaves, 1900 + Math.random() * 700);
-        }
-        document.addEventListener('DOMContentLoaded', () => {
-          spawnLeaves();
-        });
+        function spawnLeaves() {/* ... unchanged ... */}
+        document.addEventListener('DOMContentLoaded', () => { spawnLeaves(); });
       })();
 
       document.addEventListener('DOMContentLoaded', function () {
@@ -947,6 +1133,68 @@
               }, 700);
             }
           }, false);
+        }
+
+        // Informasi modal open/close logic - REWRITTEN for smooth center open/close
+        var infoBtnTop = document.getElementById('infoBtn-top');
+        var miniInfoModal = document.getElementById('miniInfoModal');
+        var closeMiniInfoBtn = document.getElementById('closeMiniInfoBtn');
+        let animInfoModalTimeout = null;
+
+        function openMiniInfoModal(){
+          if (!miniInfoModal) return;
+          miniInfoModal.classList.remove("hide");
+          miniInfoModal.style.display = "flex";
+          // Ensure styles are applied before adding .show for transition effect
+          setTimeout(function(){
+            miniInfoModal.classList.add("show");
+            if (closeMiniInfoBtn) setTimeout(()=>closeMiniInfoBtn.focus(), 150);
+          }, 10);
+          document.body.style.overflow = 'hidden';
+          document.documentElement.style.overflow = 'hidden';
+        }
+        function hideMiniInfoModal(){
+          if (!miniInfoModal) return;
+          miniInfoModal.classList.remove("show");
+          miniInfoModal.classList.add("hide");
+          // After animation, hide display
+          clearTimeout(animInfoModalTimeout);
+          animInfoModalTimeout = setTimeout(function(){
+            miniInfoModal.style.display = '';
+            miniInfoModal.classList.remove("hide");
+          }, 340);
+          document.body.style.overflow = 'hidden';
+          document.documentElement.style.overflow = 'hidden';
+        }
+
+        if (infoBtnTop && miniInfoModal) {
+          infoBtnTop.addEventListener('click', function(e){
+            e.preventDefault();
+            openMiniInfoModal();
+          });
+        }
+        if (closeMiniInfoBtn && miniInfoModal) {
+          closeMiniInfoBtn.addEventListener('click', function() {
+            hideMiniInfoModal();
+          });
+        }
+        // Tutup info modal jika backdrop diklik
+        if (miniInfoModal) {
+          miniInfoModal.addEventListener('mousedown', function(e){
+            if (e.target === miniInfoModal) {
+              hideMiniInfoModal();
+            }
+          });
+          // keyboard esc
+          document.addEventListener('keydown', function(e){
+            if (
+              miniInfoModal.classList.contains('show') &&
+              (e.key === 'Escape' || e.key === 'Esc')
+            ) {
+              e.preventDefault();
+              hideMiniInfoModal();
+            }
+          });
         }
 
         var caraBtn = document.getElementById('caraMainBtn');

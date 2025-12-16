@@ -6,6 +6,15 @@
     <title>Cara Bermain</title>
     <meta name="description" content="Panduan lengkap cara bermain game ular tangga matematika, lengkap dengan peraturan dan tips supaya lebih seru dan edukatif.">
     <style>
+        html, body {
+            scrollbar-width: none;           
+            -ms-overflow-style: none;        
+        }
+        body::-webkit-scrollbar, html::-webkit-scrollbar {
+            display: none;                   
+            width: 0 !important;
+            background: transparent !important;
+        }
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
             margin: 0;
@@ -36,11 +45,15 @@
             font-size: 1.16rem;
             font-weight: bold;
             margin: 1.1rem 0 0.3rem 0;
-            color: #226b56;
+            color: #ffffff;
             letter-spacing: 0.2px;
+            text-shadow:
+                1.5px 1.5px 0px #6b6b6b,
+                3px 3px 5px rgba(93, 113, 128, 0.30),
+                0px 4px 14px rgba(68, 68, 68, 0.14);
         }
         .gradient-box {
-            background: linear-gradient(120deg, rgba(87,204,153,0.20) 0%, rgba(32,124,229,0.07) 100%);
+            background: linear-gradient(120deg, rgba(255, 255, 255, 0.555) 0%, rgba(255, 255, 255, 0.514) 100%);
             border-radius: 12px;
             padding: 18px 18px 12px 18px;
             margin-bottom: 24px;
@@ -61,6 +74,7 @@
             height: auto;
             z-index: 1;
             user-select: none;
+            -webkit-user-select: none;
         }
         .header-img-2 {
             position: absolute;
@@ -70,6 +84,7 @@
             height: auto;
             z-index: 1;
             user-select: none;
+            -webkit-user-select: none;
         }
         @media (max-width: 900px) {
             .header-img { width: 140px; }
@@ -97,8 +112,8 @@
     </div>
     <div class="container">
         <div style="display:flex;flex-direction:column;gap:4px;">
-            <div class="title" style="margin-bottom:0;">CARA BERMAIN</div>
-            <div class="title" style="margin-top:0;">Game Ular Tangga Matematika</div>
+            <div class="title" style="margin-bottom:0; font-family: 'Poppins', Arial, Helvetica, sans-serif; font-weight: 800; letter-spacing: 0.5px; border-radius: 10px;">CARA BERMAIN</div>
+            <div class="title" style="margin-top:0; font-family: 'Rounded Mplus 1c', 'Quicksand', 'Nunito', 'Poppins', Arial, Helvetica, sans-serif; font-weight: 800; letter-spacing: 0.5px;">Game Ular Tangga Matematika</div>
         </div>
         <div class="section-label">Latar Belakang :</div>
         <div class="gradient-box">
