@@ -7,11 +7,11 @@
   <style>
     body {
       background: url('asset/background-materi.png') no-repeat center center fixed;
-      background-size: cover; /* Langsung cover untuk full page di semua device */
+      background-size: cover;
       margin: 0;
       padding: 0;
-      height: 100vh; /* Pastikan tinggi penuh viewport */
-      transition: filter 1.7s cubic-bezier(.25, .85, .43, 1.02); /* Hapus transisi background-size untuk langsung cover */
+      height: 100vh;
+      transition: filter 1.7s cubic-bezier(.25, .85, .43, 1.02);
       filter: blur(0.7px) brightness(1.15);
       will-change: filter;
     }
@@ -154,7 +154,6 @@
       justify-content: center;
     }
 
-    /* gambar kerjasama wkwkwkk */
     .gambar-wkwkk-bawah {
       display: flex;
       justify-content: center;
@@ -169,7 +168,6 @@
       box-shadow: 0 12px 44px 0 #ffe1a099, 0 8px 24px #dab05977;
       border: 6px solid #fffbe4e6;
       background: #fffbe7eb;
-      /* sampai sini lurr */
       opacity: 0;
       transform: scale(0.85) translateY(60px);
       animation: tampilWkwkkGif 1.19s 0.4s cubic-bezier(.23,1.07,.47,2) forwards;
@@ -182,8 +180,6 @@
       100% { opacity: 1; transform: scale(1) translateY(0);}
     }
 
-    /* Media Queries untuk Responsivitas */
-    /* Tablet (max-width: 768px) */
     @media (max-width: 768px) {
       .judul-materi-have-fun {
         font-size: 2.2rem;
@@ -213,7 +209,6 @@
       }
     }
 
-    /* Mobile (max-width: 500px) */
     @media (max-width: 500px) {
       .judul-materi-have-fun {
         font-size: 1.35rem;
@@ -243,7 +238,6 @@
       }
     }
 
-    /* Small Mobile (max-width: 360px) */
     @media (max-width: 360px) {
       .judul-materi-have-fun {
         font-size: 1.2rem;
@@ -273,10 +267,9 @@
       }
     }
 
-    /* Media Query untuk Mobile Background (opsional, jika fixed tidak bekerja di mobile) */
     @media (max-width: 768px) {
       body {
-        background-attachment: scroll; /* Ubah ke scroll jika fixed bermasalah di mobile */
+        background-attachment: scroll;
       }
     }
   </style>
@@ -297,7 +290,6 @@
   </div>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      // Hapus transisi background-size, langsung set filter saja
       setTimeout(() => {
         document.body.style.filter = "blur(0px) brightness(1)";
       }, 50);

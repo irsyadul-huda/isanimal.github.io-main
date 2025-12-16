@@ -7,11 +7,11 @@
   <style>
     body {
       background: url('asset/background-materi.png') no-repeat center center fixed;
-      background-size: cover; /* Langsung cover untuk full page di semua device */
+      background-size: cover;
       margin: 0;
       padding: 0;
-      height: 100vh; /* Pastikan tinggi penuh viewport */
-      transition: filter 1.7s cubic-bezier(.25, .85, .43, 1.02); /* Hapus transisi background-size untuk langsung cover */
+      height: 100vh;
+      transition: filter 1.7s cubic-bezier(.25, .85, .43, 1.02);
       filter: blur(0.7px) brightness(1.15);
       will-change: filter;
     }
@@ -213,7 +213,6 @@
       }
     }
 
-    /* Mobile (max-width: 500px) */
     @media (max-width: 500px) {
       .judul-materi-have-fun {
         font-size: 1.35rem;
@@ -243,7 +242,6 @@
       }
     }
 
-    /* Small Mobile (max-width: 360px) */
     @media (max-width: 360px) {
       .judul-materi-have-fun {
         font-size: 1.2rem;
@@ -273,10 +271,9 @@
       }
     }
 
-    /* Media Query untuk Mobile Background (opsional, jika fixed tidak bekerja di mobile) */
     @media (max-width: 768px) {
       body {
-        background-attachment: scroll; /* Ubah ke scroll jika fixed bermasalah di mobile */
+        background-attachment: scroll;
       }
     }
   </style>
@@ -297,7 +294,6 @@
   </div>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      // Hapus transisi background-size, langsung set filter saja
       setTimeout(() => {
         document.body.style.filter = "blur(0px) brightness(1)";
       }, 50);

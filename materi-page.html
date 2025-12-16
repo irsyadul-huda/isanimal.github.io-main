@@ -311,12 +311,10 @@
       position: relative;
       overflow: hidden;
       background-clip: padding-box;
-      /* backdrop-filter and blur effect removed */
       background: rgba(255, 255, 255, 0.644);
       border: 1.5px solid #0706039c;
     }
     .materi-card:hover {
-      /* Only transform and box-shadow retained, no blur effect */
       transform: scale(1.06) translateY(-8px) rotateZ(-0.7deg);
       box-shadow: 0 16px 60px #d5d75584, 0 12px 36px #ffea99ba, 0 2px 20px #cab87c33;
       z-index: 2;
@@ -345,7 +343,6 @@
       margin-bottom: 0;
       line-height: 1.35;
     }
-    /* Extra fadeout effect for page transition! */
     body.fadeout { opacity: 0 !important; transition: opacity 0.6s cubic-bezier(.44,.05,.54,1);}
     @media (max-width: 900px) {
       .materi-container {
@@ -458,12 +455,10 @@
   </div>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      // Fade in on load
       setTimeout(function () {
         document.body.classList.add('fadein');
       }, 20);
 
-      // AUDIO related code (unchanged)
       var audio = document.getElementById('backgroundAudio');
       var muteBtn = document.getElementById('muteToggleBtn');
       var iconMain = document.getElementById('icon-mute-toggle');
@@ -633,7 +628,6 @@
         }, 510);
       });
 
-      // CARD CLICK HANDLERS & FADEOUT ON PAGE NAVIGATION
       document.querySelectorAll('.materi-card').forEach(function(card) {
         card.addEventListener('click', function(e) {
           var href = card.getAttribute('data-href');
@@ -649,7 +643,6 @@
         card.style.userSelect = "none";
       });
 
-      // Ensures fadein class is reset if coming back via browser navigation
       window.addEventListener('pageshow', function(event){
         setTimeout(function () {
           document.body.classList.add('fadein');
