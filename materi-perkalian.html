@@ -1,0 +1,210 @@
+<style>
+    body {
+      background: url('asset/background-materi.png') no-repeat center center fixed;
+      background-size: 122% auto;
+      margin: 0;
+      padding: 0;
+      transition: background-size 1.7s cubic-bezier(.25, .85, .43, 1.02), filter 1.7s cubic-bezier(.25, .85, .43, 1.02);
+      filter: blur(0.7px) brightness(1.15);
+      will-change: background-size, filter;
+    }
+    .back-btn-simple {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      z-index: 20;
+      width: 36px;
+      height: 36px;
+      background: #ffe168;
+      border: none;
+      border-radius: 50%;
+      box-shadow:
+        0 4px 16px 0 #c4b04c66,
+        0 1.5px 4px #00000033,
+        0 6px 26px 4px #f3e19b55,
+        0 1px 10px 2px #b8993644;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition:
+        background 0.14s,
+        box-shadow 0.16s,
+        transform 0.16s cubic-bezier(.23,.82,.52,1.08),
+        filter 0.19s;
+      outline: none;
+      padding: 0;
+      font-family: inherit;
+      text-decoration: none;
+    }
+    .back-btn-simple:active {
+      background: #f7cf3e;
+      box-shadow: 0 2px 6px #bbaa3633,
+        0 3px 18px #f3e5a866;
+    }
+    .back-btn-simple svg {
+      width: 18px;
+      height: 18px;
+      display: block;
+      margin: 0 auto;
+      filter:
+        drop-shadow(0 2px 2px #d1be6e79)
+        drop-shadow(0 -1px 1px #fff7c199);
+      transition: filter 0.19s;
+    }
+    .back-btn-simple:hover,
+    .back-btn-simple:focus-visible {
+      transform: scale(1.12);
+      box-shadow:
+        0 7px 28px 10px #ffe399a0,
+        0 8px 32px 11px #eed37eb7,
+        0 4px 24px 6px #fff58082,
+        0 0px 18px 6px #ffec8b72,
+        0 6px 22px 0 #fdeb9688,
+        0 1.5px 4px #bbaa3633;
+      filter: brightness(1.07) blur(0.2px);
+    }
+    .back-btn-simple:hover svg,
+    .back-btn-simple:focus-visible svg {
+      filter:
+        drop-shadow(0 2px 7px #ffe169c8)
+        drop-shadow(0 0px 14px #ffe1629a)
+        drop-shadow(0 2px 2px #d1be6e79)
+        drop-shadow(0 -1px 1px #fff7c199);
+    }
+    .judul-materi-have-fun {
+      margin: 0 auto;
+      margin-top: 54px;
+      margin-bottom: 24px;
+      display: block;
+      text-align: center;
+      font-family: 'Comic Sans MS', 'Comic Sans', 'Baloo 2', 'Luckiest Guy', 'Fredoka One', cursive, sans-serif;
+      font-size: 2.7rem;
+      background: url('asset/wood.png') repeat center center;
+      color: #895c00;
+      padding: 18px 32px 13px 32px;
+      border-radius: 32px 32px 22px 22px/38px 34px 14px 12px;
+      box-shadow: 0 6px 36px #ffefb355, 0 2px 6px #000000a6;
+      letter-spacing: 1.5px;
+      text-shadow:
+        0 2px 0 #ffffffb0,
+        0 3px 11px #fad86a8d,
+        0 1px 0 #fff7bf,
+        0px 2px 2px #deb33544,
+        0 4px 18px #fff7c180,
+        0 7px 12px #e7c35b70,
+        1px 10px 24px #b2993888;
+      font-weight: bold;
+      outline: none;
+      user-select: none;
+      -webkit-user-select: none;
+      opacity: 0;
+      transform: translateY(-70px);
+      animation: none;
+    }
+    .judul-materi-have-fun.animate-bounce-fall {
+      animation: bounceInDropSmooth 1.3s cubic-bezier(.23,1.07,.47,2) forwards;
+    }
+    @keyframes bounceInDropSmooth {
+      0% {
+        opacity: 0;
+        transform: translateY(-70px);
+      }
+      55% {
+        opacity: 1;
+        transform: translateY(6px);
+      }
+      72% {
+        transform: translateY(-6px);
+      }
+      86% {
+        transform: translateY(2.5px);
+      }
+      93% {
+        transform: translateY(-1.4px);
+      }
+      98% {
+        transform: translateY(0.8px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @media (max-width: 500px) {
+      .judul-materi-have-fun {
+        font-size: 1.35rem;
+        padding: 12px 10vw 9px 10vw;
+        border-radius: 20px 20px 15px 15px/22px 18px 10px 8px;
+        margin-top: 48px;
+      }
+    }
+    .judul-wrapper-center {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+    }
+    /* gambar kerjasama wkwkwkk */
+    .gambar-wkwkk-bawah {
+      display: flex;
+      justify-content: center;
+      margin-top: 45px;
+      margin-bottom: 55px;
+    }
+    .gambar-wkwkk-bawah img {
+      max-width: 520px;
+      width: 95vw;
+      border-radius: 34px;
+      box-shadow: 0 12px 44px 0 #ffe1a099, 0 8px 24px #dab05977;
+      border: 6px solid #fffbe4e6;
+      background: #fffbe7eb;
+      /* sampai sini lurr */
+      opacity: 0;
+      transform: scale(0.85) translateY(60px);
+      animation: tampilWkwkkGif 1.19s 0.4s cubic-bezier(.23,1.07,.47,2) forwards;
+    }
+    @keyframes tampilWkwkkGif {
+      0% { opacity: 0; transform: scale(0.85) translateY(60px);}
+      52% { opacity: 1; transform: scale(1.08) translateY(-8px);}
+      80% { opacity: 1; transform: scale(0.96) translateY(2px);}
+      100% { opacity: 1; transform: scale(1) translateY(0);}
+    }
+  </style>
+  <a href="materi-page.html" class="back-btn-simple" title="Kembali" aria-label="Kembali ke materi">
+    <svg viewBox="0 0 32 32" fill="none">
+      <path d="M19.5 8L12 16L19.5 24" stroke="#917003" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+      <ellipse cx="16" cy="15" rx="12" ry="13.5" fill="none" stroke="#ede1a9" stroke-width="2.2" opacity="0.45"/>
+      <ellipse cx="16" cy="18" rx="4" ry="1.4" fill="#ffffffbb" opacity="0.53" transform="rotate(-7 16 18)"/>
+    </svg>
+  </a>
+  <div class="judul-wrapper-center">
+    <h1 class="judul-materi-have-fun" id="judulPembagian">Materi Perkalian</h1>
+  </div>
+  <div class="gambar-wkwkk-bawah">
+    <img src="asset/wkwkk.gif" alt="wkwkk gif"/>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      setTimeout(() => {
+        document.body.style.backgroundSize = "100% auto";
+        document.body.style.filter = "blur(0px) brightness(1)";
+      }, 50);
+      setTimeout(function() {
+        var judul = document.getElementById('judulPembagian');
+        if (judul) {
+          judul.classList.add('animate-bounce-fall');
+        }
+      }, 180);
+      document.body.addEventListener('transitionend', function handler(evt) {
+        if (
+          (evt.propertyName === "background-size" || evt.propertyName === "filter") &&
+          getComputedStyle(document.body).backgroundSize === "100% auto"
+        ) {
+          document.body.style.backgroundSize = "cover";
+          document.body.style.filter = "";
+          document.body.removeEventListener('transitionend', handler);
+        }
+      });
+    });
+  </script>

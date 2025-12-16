@@ -108,6 +108,7 @@
       top: 69px;
       left: 0px;
       z-index: 34000;
+      -webkit-user-select: none;
       user-select: none;
       pointer-events: none;
       width: 100%;
@@ -310,12 +311,12 @@
       position: relative;
       overflow: hidden;
       background-clip: padding-box;
-      backdrop-filter: blur(1px);
-      -webkit-backdrop-filter: blur(1px);
+      /* backdrop-filter and blur effect removed */
       background: rgba(255, 255, 255, 0.644);
       border: 1.5px solid #0706039c;
     }
     .materi-card:hover {
+      /* Only transform and box-shadow retained, no blur effect */
       transform: scale(1.06) translateY(-8px) rotateZ(-0.7deg);
       box-shadow: 0 16px 60px #d5d75584, 0 12px 36px #ffea99ba, 0 2px 20px #cab87c33;
       z-index: 2;
@@ -344,6 +345,8 @@
       margin-bottom: 0;
       line-height: 1.35;
     }
+    /* Extra fadeout effect for page transition! */
+    body.fadeout { opacity: 0 !important; transition: opacity 0.6s cubic-bezier(.44,.05,.54,1);}
     @media (max-width: 900px) {
       .materi-container {
         flex-direction: row;
@@ -424,29 +427,29 @@
   <audio id="backgroundAudio" src="audio-materi.mp3" loop></audio>
   <h1>Materi Matematic Game</h1>
   <div class="materi-container">
-    <div class="materi-card">
+    <div class="materi-card" data-href="materi-penjumlahan.html">
       <div class="icon"><img src="/asset/matematika 2.png" alt="Penjumlahan" style="width:200px;height:200px;object-fit:contain;"></div>
       <div class="materi-title">Penjumlahan</div>
       <div class="materi-desc">
         Belajar teknik dasar dan tips menghitung penjumlahan angka dengan mudah dan cepat.
       </div>
     </div>
-    <div class="materi-card">
-      <div class="icon"><img src="/asset/matematika 1.png" alt="Penjumlahan" style="width:200px;height:200px;object-fit:contain;"></div>
+    <div class="materi-card" data-href="materi-pengurangan.html">
+      <div class="icon"><img src="/asset/matematika 1.png" alt="Pengurangan" style="width:200px;height:200px;object-fit:contain;"></div>
       <div class="materi-title">Pengurangan</div>
       <div class="materi-desc">
         Memahami langkah-langkah pengurangan serta cara menyelesaikan soal cerita.
       </div>
     </div>
-    <div class="materi-card">
-      <div class="icon"><img src="/asset/matematika 4.png" alt="Penjumlahan" style="width:200px;height:200px;object-fit:contain;"></div>
+    <div class="materi-card" data-href="materi-perkalian.html">
+      <div class="icon"><img src="/asset/matematika 4.png" alt="Perkalian" style="width:200px;height:200px;object-fit:contain;"></div>
       <div class="materi-title">Perkalian</div>
       <div class="materi-desc">
         Menjelajahi trik dan latihan soal untuk menguasai perkalian dengan tabel dan pola.
       </div>
     </div>
-    <div class="materi-card">
-      <div class="icon"><img src="/asset/matematika 3.png" alt="Penjumlahan" style="width:200px;height:200px;object-fit:contain;"></div>
+    <div class="materi-card" data-href="materi-pembagian.html">
+      <div class="icon"><img src="/asset/matematika 3.png" alt="Pembagian" style="width:200px;height:200px;object-fit:contain;"></div>
       <div class="materi-title">Pembagian</div>
       <div class="materi-desc">
         Pelajari pembagian dasar, konsep sisa, dan cara membagi dengan pembagian bersusun.
@@ -455,10 +458,12 @@
   </div>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
+      // Fade in on load
       setTimeout(function () {
         document.body.classList.add('fadein');
       }, 20);
 
+      // AUDIO related code (unchanged)
       var audio = document.getElementById('backgroundAudio');
       var muteBtn = document.getElementById('muteToggleBtn');
       var iconMain = document.getElementById('icon-mute-toggle');
@@ -627,6 +632,31 @@
           window.location.href = "index.html";
         }, 510);
       });
+
+      // CARD CLICK HANDLERS & FADEOUT ON PAGE NAVIGATION
+      document.querySelectorAll('.materi-card').forEach(function(card) {
+        card.addEventListener('click', function(e) {
+          var href = card.getAttribute('data-href');
+          if (href) {
+            e.preventDefault();
+            document.body.classList.remove('fadein');
+            document.body.classList.add('fadeout');
+            setTimeout(function() {
+              window.location.href = href;
+            }, 500);
+          }
+        });
+        card.style.userSelect = "none";
+      });
+
+      // Ensures fadein class is reset if coming back via browser navigation
+      window.addEventListener('pageshow', function(event){
+        setTimeout(function () {
+          document.body.classList.add('fadein');
+        }, 20);
+        document.body.classList.remove('fadeout');
+      });
+
     });
   </script>
 </body>
