@@ -228,6 +228,111 @@
         }
         .success-icon { font-size: 60px; margin-bottom: 10px; }
         .success-text { font-weight: bold; font-size: 20px; color: #2e7d32; }
+        .modal-simple {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 7px 32px rgba(0,0,0,0.25);
+            text-align: center;
+            padding: 36px 24px 25px 24px;
+            transition: all 0.19s;
+            position: relative;
+            max-width: 320px;
+            margin: auto;
+            font-family: 'Fredoka One', cursive;
+            color: #673900;
+        }
+        .modal-simple .btn-close-popup {
+            margin-top: 28px;
+            min-width: 120px;
+            background: #ffb900;
+            color: #673900;
+            font-family: inherit;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 25px;
+            font-size: 18px;
+            box-shadow: 0 2px 12px #ffdeaf70;
+            cursor: pointer;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: background 0.17s;
+        }
+        .modal-simple .btn-close-popup:active {
+            background: #ffe7a8;
+        }
+
+        .win-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.73);
+            z-index: 1500;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            backdrop-filter: blur(3px);
+        }
+        .win-modal-box {
+            background: #fff;
+            border-radius: 22px;
+            padding: 40px 20px 34px 20px;
+            max-width: 370px;
+            width: 95vw;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 20px 55px rgba(48,35,5,0.24);
+            animation: zoomIn 0.28s cubic-bezier(.65,1.3,.4,1.01);
+        }
+        .win-modal-title {
+            font-size: 32px;
+            font-family: 'Fredoka One', cursive;
+            color: #f77c18;
+            line-height: 1.2;
+            margin: 6px 0 5px 0;
+            font-weight: bold;
+        }
+        .win-modal-sub {
+            font-size: 22px;
+            margin-top: 10px;
+            margin-bottom: 0;
+            color: #635611;
+        }
+        .win-modal-btns {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+        }
+        .win-modal-btn {
+            min-width: 120px;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 18px;
+            font-family: inherit;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 18px #ffdea374;
+            background: #ffe299;
+            color: #7b5f19;
+            transition: background 0.16s;
+        }
+        .win-modal-btn:active {
+            background: #ffd16d;
+        }
+        .win-modal-emoji {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .win-modal-emoji img {
+            max-width: 80px; max-height: 80px;
+            width: 68px; height: 68px;
+        }
         @keyframes zoomIn {
             from { transform: scale(0.5); opacity: 0; }
             to   { transform: scale(1); opacity: 1; }
@@ -545,12 +650,12 @@
                 <div class="turn-text">Giliran: 
                     <span id="current-player-name" class="turn-highlight" style="color:#FF5722">
                         <img src="https://img.icons8.com/?size=100&id=7uJob2d9mFBS&format=png&color=000000" alt="Harimau" style="width:22px;vertical-align:middle;margin-right:4px;">
-                        Harimau
+                    Harimau
                     </span>
                 </div>
                 <div style="font-size:14px;color:#666;margin-top:4px;">Klik Dadu Utuk Jalan!</div>
             </div>
-            <button onclick="resetGame()" style="background:#ff5252;color:white;border:none;padding:8px 15px;border-radius:5px;font-weight:bold;cursor:pointer;">RESET</button>
+            <button onclick="resetGame()" style="background:#4b3315;color:white;border:none;padding:8px 15px;border-radius:5px;font-weight:bold;cursor:pointer;">Mulai Ulang</button>
         </div>
     </div>
 
@@ -579,6 +684,27 @@
             <div class="success-text">HEBAT!</div>
         </div>
     </div>
+    
+    <div id="popupKelebihanModal" class="modal-overlay" style="z-index:2001;">
+        <div class="modal-simple">
+            <div style="font-size:42px;margin-bottom:18px;">⚠️</div>
+            <div style="font-size:20px;margin-bottom:7px;">Kelebihan langkah!</div>
+            <div style="font-size:17px;color:#6c5902;margin-bottom:10px;">Tunggu giliran depan.</div>
+            <button class="btn-close-popup" onclick="closeKelebihanPopup()">Tutup</button>
+        </div>
+    </div>
+    <div id="winModal" class="win-modal-overlay">
+        <div class="win-modal-box">
+            <div class="win-modal-emoji" id="winEmoji">
+            </div>
+            <div class="win-modal-title" id="winText"></div>
+            <div class="win-modal-sub">SELAMAT!</div>
+            <div class="win-modal-btns">
+                <button class="win-modal-btn" id="btnPlayAgain" onclick="handlePlayAgainGame()">Bermain Lagi</button>
+                <button class="win-modal-btn" id="btnHome" onclick="goToHome()">Home</button>
+            </div>
+        </div>
+    </div>
 
     <audio id="bgMusic" loop style="display:none">
         <source src="audio.mp3" type="audio/mpeg">
@@ -599,6 +725,42 @@
         const giraffeIconUrl = "https://img.icons8.com/?size=100&id=gtx2QwlbvAak&format=png&color=000000";
         const bearIconUrl    = "https://img.icons8.com/?size=100&id=VbxKFvBFUSfq&format=png&color=000000";
         const jerapahIconUrl = "https://img.icons8.com/?size=100&id=uEwiPVltqhdZ&format=png&color=000000";
+
+        function getPlayerAnimalIcon(pid) {
+            switch (pid) {
+                case 0: return `<img src="${tigerIconUrl}" alt="Harimau" />`;
+                case 1: return `<img src="${giraffeIconUrl}" alt="Rubah" />`;
+                case 2: return `<img src="${bearIconUrl}" alt="Beruang" />`;
+                case 3: return `<img src="${jerapahIconUrl}" alt="Jerapah" />`;
+                default: return "";
+            }
+        }
+
+        function showWinModal(player) {
+            document.getElementById('winModal').style.display = "flex";
+            document.getElementById('winEmoji').innerHTML = getPlayerAnimalIcon(player.id);
+            document.getElementById('winText').innerText = `${player.name} MENANG! 🎉`;
+        }
+        function closeWinModal() {
+            document.getElementById('winModal').style.display = "none";
+        }
+        function handlePlayAgainGame() {
+            closeWinModal();
+            resetGame();
+        }
+        function goToHome() {
+            document.body.classList.remove('fadein');
+            setTimeout(function() {
+                window.location.href = "index.html";
+            }, 320);
+        }
+
+        function showKelebihanPopup() {
+            document.getElementById('popupKelebihanModal').style.display = "flex";
+        }
+        function closeKelebihanPopup() {
+            document.getElementById('popupKelebihanModal').style.display = "none";
+        }
 
         const players = [
             { id: 0, name: "Harimau", icon: "custom-tiger",   color: "#FF5722", pos: 1 },
@@ -697,7 +859,7 @@
 
             let nextPos = player.pos + diceVal;
             if (nextPos > 35) {
-                alert("Kelebihan langkah! Tunggu giliran depan.");
+                showKelebihanPopup();
                 nextTurn();
                 return;
             }
@@ -715,7 +877,7 @@
             }
 
             if (player.pos === 35) {
-                setTimeout(() => alert(`SELAMAT! ${player.name} MENANG! 🎉`), 500);
+                setTimeout(() => showWinModal(player), 500);
                 return;
             }
 
@@ -982,6 +1144,12 @@
 
             document.addEventListener('keydown', function (ev) {
                 if (dropdownOpen && ev.key === "Escape") hideDropdown();
+                if(document.getElementById('popupKelebihanModal').style.display === "flex" && ev.key === "Escape") {
+                    closeKelebihanPopup();
+                }
+                if(document.getElementById('winModal').style.display === "flex" && ev.key === "Escape") {
+                    closeWinModal();
+                }
             });
             window.addEventListener('resize', function () {
                 if (dropdownOpen) hideDropdown();
