@@ -4,16 +4,42 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Materi Penjumlahan</title>
+    <link rel="icon" href="asset/logo.png" type="image/x-icon">
   <style>
     body {
-      background: url('asset/background-materi.png') no-repeat center center fixed;
-      background-size: cover;
       margin: 0;
       padding: 0;
       height: 100vh;
       transition: filter 1.7s cubic-bezier(.25, .85, .43, 1.02);
       filter: blur(0.7px) brightness(1.15);
       will-change: filter;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .hide-scroll {
+      overflow: hidden !important;
+      overscroll-behavior: none;
+    }
+
+    .background-zoom {
+      position: fixed;
+      z-index: -1;
+      left: 0; top: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      background: url('asset/background-materi.png') no-repeat center center fixed;
+      background-size: cover;
+      transition:
+        transform 1.45s cubic-bezier(.23,1.03,.46,1.02),
+        filter 1.7s cubic-bezier(.25, .85, .43, 1.02);
+      will-change: transform, filter;
+      transform: scale(1.13);
+    }
+
+    .background-zoom.zoomed {
+      transform: scale(1);
     }
 
     .back-btn-simple {
@@ -182,8 +208,6 @@
       100% { opacity: 1; transform: scale(1) translateY(0);}
     }
 
-    /* Media Queries untuk Responsivitas */
-    /* Tablet (max-width: 768px) */
     @media (max-width: 768px) {
       .judul-materi-have-fun {
         font-size: 2.2rem;
@@ -211,8 +235,10 @@
         width: 16px;
         height: 16px;
       }
+      .background-zoom {
+        background-attachment: scroll;
+      }
     }
-
     @media (max-width: 500px) {
       .judul-materi-have-fun {
         font-size: 1.35rem;
@@ -241,7 +267,6 @@
         height: 14px;
       }
     }
-
     @media (max-width: 360px) {
       .judul-materi-have-fun {
         font-size: 1.2rem;
@@ -270,15 +295,10 @@
         height: 12px;
       }
     }
-
-    @media (max-width: 768px) {
-      body {
-        background-attachment: scroll;
-      }
-    }
   </style>
 </head>
 <body>
+  <div class="background-zoom" id="bgZoom"></div>
   <a href="materi-page.html" class="back-btn-simple" title="Kembali" aria-label="Kembali ke materi">
     <svg viewBox="0 0 32 32" fill="none">
       <path d="M19.5 8L12 16L19.5 24" stroke="#917003" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
@@ -290,12 +310,44 @@
     <h1 class="judul-materi-have-fun" id="judulPembagian">Materi Penjumlahan</h1>
   </div>
   <div class="gambar-wkwkk-bawah">
-    <img src="asset/wkwkk.gif" alt="wkwkk gif"/>
+    <img src="asset/wkwkk.gif" alt="wkwkk gif" style="opacity:0; transform:translateY(100px) scale(0.50); animation:swipeTopWkwkk 1.10s cubic-bezier(.21,.70,.90,1.1) forwards;">
+    <style>
+    @keyframes swipeTopWkwkk {
+      0% {
+        opacity: 0;
+        transform: translateY(100px) scale(0.95);
+        filter: blur(12px);
+      }
+      55% {
+        opacity: 1;
+        transform: translateY(-10px) scale(1.02);
+        filter: blur(0.5px);
+      }
+      80% {
+        opacity: 1;
+        transform: translateY(4px) scale(0.97);
+        filter: blur(0);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
+    }
+    </style>
   </div>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
+      document.body.classList.add('hide-scroll');
       setTimeout(() => {
         document.body.style.filter = "blur(0px) brightness(1)";
+        var bg = document.getElementById('bgZoom');
+        if (bg) {
+          bg.classList.add('zoomed');
+        }
+         setTimeout(function() {
+          document.body.classList.remove('hide-scroll');
+        }, 1650);
       }, 50);
       setTimeout(function() {
         var judul = document.getElementById('judulPembagian');
