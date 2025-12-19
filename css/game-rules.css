@@ -1,0 +1,98 @@
+html, body {
+    scrollbar-width: none;           
+    -ms-overflow-style: none;        
+}
+body::-webkit-scrollbar, html::-webkit-scrollbar {
+    display: none;                   
+    width: 0 !important;
+    background: transparent !important;
+}
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom right, #b2bfd4, #f1dd76);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+.container {
+    max-width: 700px;
+    margin: 60px auto 0 auto;
+    padding: 32px 24px;
+    background: rgba(255, 255, 255, 0.027);
+    border-radius: 20px;
+    box-shadow: 0 6px 32px rgba(0,0,0,0.09);
+    position: relative;
+    z-index: 2;
+}
+.title {
+    font-size: 2.1rem;
+    font-weight: bold;
+    margin-bottom: 1.4rem;
+    letter-spacing: 1px;
+    text-align: center;
+}
+.section-label {
+    font-size: 1.16rem;
+    font-weight: bold;
+    margin: 1.1rem 0 0.3rem 0;
+    color: #ffffff;
+    letter-spacing: 0.2px;
+    text-shadow:
+        1.5px 1.5px 0px #6b6b6b,
+        3px 3px 5px rgba(93, 113, 128, 0.30),
+        0px 4px 14px rgba(68, 68, 68, 0.14);
+}
+.gradient-box {
+    background: linear-gradient(120deg, rgba(255, 255, 255, 0.555) 0%, rgba(255, 255, 255, 0.514) 100%);
+    border-radius: 12px;
+    padding: 18px 18px 12px 18px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 6px rgba(80,208,158, 0.10);
+    font-size: 1.06rem;
+    text-align: justify;
+}
+.header-decoration {
+    position: fixed;
+    pointer-events: none;
+    z-index: 1;
+}
+.header-img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 240px;
+    height: auto;
+    z-index: 1;
+    user-select: none;
+    -webkit-user-select: none;
+}
+.header-img-2 {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 320px;
+    height: auto;
+    z-index: 1;
+    user-select: none;
+    -webkit-user-select: none;
+}
+@media (max-width: 900px) {
+    .header-img { width: 140px; }
+    .header-img-2 { width: 180px; }
+}
+@media (max-width: 600px) {
+    .container {
+        padding: 8vw 4vw;
+    }
+    .title {
+        font-size: 1.25rem;
+    }
+    .header-img {
+        width: 90px;
+    }
+    .header-img-2 {
+        width: 110px;
+    }
+}
